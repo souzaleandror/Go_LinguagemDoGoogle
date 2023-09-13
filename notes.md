@@ -973,7 +973,6 @@ Variáveis e imports não utilizados são deletados
 
 @@10
 Para saber mais: Buscando melhor no Google
-PRÓXIMA ATIVIDADE
 
 Sabemos que o Google é grande aliado do programador, normalmente sendo o primeiro local aonde buscamos ajuda quando estamos com dificuldade em algum problema ou travados na resolução de um bug.
 Porém, se você for buscar pelas suas dúvidas de programação em Go no Google, pode ser que dependendo do que você busque , você não encontre resultados esperados.
@@ -1065,7 +1064,6 @@ Com isso, concluímos os ifs, que não possui muito mistério, as diferenças pa
 
 @@02
 Discutindo maioridade...
-PRÓXIMA ATIVIDADE
 
 Para qual das alternativas abaixo o Go vai permitir compilarmos o if abaixo?
 if maiorDeIdade {
@@ -1142,7 +1140,6 @@ No Go, ele não possui o break, pois somente um caso pode ser atendido. O primei
 
 @@04
 Cardápio apetitoso
-PRÓXIMA ATIVIDADE
 
 Mário foi contratado por um restaurante para desenvolver um programa que solicita a escolha do cardápio. Ele implementou na linguagem Go e seu código está listado abaixo.
 package main
@@ -1196,7 +1193,6 @@ A palavra reservada switch permite incluir várias alternativas de execução pa
 
 @@05
 Como dizia Tim Maia, olha o breque!
-PRÓXIMA ATIVIDADE
 
 Em outras linguagens, após cada alternativa é necessário colocar a palavra reservada break. Quais são os comportamentos do compilador da linguagem Go?
 Alternativa correta
@@ -1437,7 +1433,6 @@ Quando o usuário digitar um comando desconhecido, ao invés de encerrar o progr
 
 @@07
 Retornando valores numa função
-PRÓXIMA ATIVIDADE
 
 Observe o código abaixo.
 package main
@@ -1471,7 +1466,6 @@ func string lePalavra() {
 
 @@08
 Saindo com graça
-PRÓXIMA ATIVIDADE
 
 O que precisamos adicionar em nosso programa para sair dele com código de status de sucesso?
 Alternativa correta
@@ -1501,7 +1495,6 @@ os.Exit(0)
 
 @@09
 Mãos na Massa: Organização e Fluxo
-PRÓXIMA ATIVIDADE
 
 Começando deste ponto? Você pode fazer o DOWNLOAD completo do projeto do capítulo anterior e continuar seus estudos a partir deste capítulo.
 Neste capitulo vamos determinar para qual fluxo do nosso programa o usuário deve seguir a partir do comando que ele escolheu, e além disso vamos começar a organizar nosso código em pequenas funções.
@@ -1653,3 +1646,575 @@ Controle de fluxo com switch
 Se os casos não forem atendidos, será executado o código do caso default
 Introdução às funções
 Pacote os, para encerrar o programa
+
+#### 
+
+@04-Fazendo requisições para a web
+
+@@01
+Iniciando o monitoramento
+
+Começando deste ponto? Você pode fazer o DOWNLOAD completo do projeto do capítulo anterior e continuar seus estudos a partir deste capítulo.
+Agora que já começamos a separar o nosso código em funções menores, já podemos dar início ao principal da aplicação, que é monitorar os sites, para ver se os mesmos estão online ou não. Então, vamos começar criando a função iniciarMonitoramento:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+}COPIAR CÓDIGO
+E já vamos chamá-la caso o usuário digite o comando 1:
+
+package main
+
+import "fmt"
+import "os"
+
+func main() {
+
+    exibeIntroducao()
+    exibeMenu()
+    comando := leComando()
+
+    switch comando {
+    case 1:
+        iniciarMonitoramento()
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa")
+        os.Exit(0)
+    default:
+        fmt.Println("Não conheço este comando")
+        os.Exit(-1)
+    }
+}
+
+// restante do código omitidoCOPIAR CÓDIGO
+Se queremos que o programa fique testando se o site está online, ou caiu, ele precisa acessar o site. Se queremos acessar um site, precisamos realizar uma requisição web, utilizando a linguagem Go.
+
+Para fazer requisições web, existe um pacote especialista nisso, dentro do net, pacote de internet do Go, há o http, pacote responsável pelas requisições web:
+
+package main
+
+import "fmt"
+import "os"
+import "net/http"
+
+// restante do código omitidoCOPIAR CÓDIGO
+Agora, vamos monitorar o site da Alura, então, na função iniciarMonitoramento, vamos definir uma variável com o nome do site:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+    site := "https://www.alura.com.br"
+}COPIAR CÓDIGO
+Com o site em mãos, vamos fazer uma requisição GET para o mesmo, utilizando a função Get, de http:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+    site := "https://www.alura.com.br"
+    http.Get(site)
+}COPIAR CÓDIGO
+Quando acessamos o site da Alura através do browser, obtemos uma resposta, que é carregada no navegador. A mesma coisa acontece quando carregamos o site através do Go, essa resposta vem através de um retorno da função Get, que iremos guardar na variável resp:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+    site := "https://www.alura.com.br"
+    resp := http.Get(site)
+}COPIAR CÓDIGO
+Ao salvar o arquivo, vemos que o Visual Studio Code aponta um erro, isso acontece porque a função Get retorna mais de um valor. Sim, existem funções no Go que retornam mais de um valor e a Get é uma delas, além da resposta, ela também retorna um possível erro que possa ter acontecido na requisição:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+    site := "https://www.alura.com.br"
+    resp, err := http.Get(site)
+}COPIAR CÓDIGO
+Novidade isso, né? Vamos avaliar essa questão de funções que retornam mais de um valor no próximo vídeo.
+
+https://s3.amazonaws.com/caelum-online-public/624-golang/03/projetos/alura-golang-stage-fim-cap03.zip
+
+@@02
+Pacote para acesso a internet
+
+Na construção do projeto de monitorização de sites teremos que efetuar uma comunicação com a Web. Isso é facilmente resolvido por que no Go já temos o seguinte pacote:
+Alternativa correta
+"net/http"
+ 
+"net/http" é pacote mais específico à nossa necessidade. Já que nele temos funções para realizar requisições Get e Post.
+Alternativa correta
+"net/web"
+ 
+Alternativa correta
+"http"
+ 
+Alternativa correta
+"net"
+ 
+Alternativa correta
+"io/ioutil"
+ 
+A utilização de pacotes providos pela linguagem é extremamente comum no desenvolvimento de Software. Com o Go não é diferente! Existem diversos pacotes para os mais variados propósitos.
+Para uma comunicação web com um determinado site é necessário a utilização do pacote "net/http". Que pela própria definição dele tem como objetivo fornecer a implementações de cliente e servidor HTTP.
+
+É importante saber que temos vários subdiretórios dentro do "net". Se quiséssemos fazer um envio de email poderíamos usar o "net/smtp".
+
+Como referência para sabermos os pacotes da linguagem temos: https://golang.org/pkg/
+
+@@03
+Funções com múltiplos retornos
+
+Para entendermos melhor a questão das funções que retornam mais de um valor, nada melhor do que aprendermos isso fazendo uma função desse tipo. Vamos criar a função devolveNome, que retorna um nome, logo uma string:
+// restante do código omitido
+
+func devolveNome() string {
+    nome := "Douglas"
+    return nome
+}COPIAR CÓDIGO
+E na função main, vamos guardar o retorno dessa função em uma variável e imprimi-la. Além disso, vamos comentar as chamadas das funções exibeIntroducao e exibeMenu, somente para não ficarmos com muita informação na tela:
+
+// restante do código omitido
+
+func main() {
+
+    //exibeIntroducao()
+    //exibeMenu()
+
+    nome := devolveNome()
+    fmt.Println(nome)
+
+    comando := leComando()
+
+    switch comando {
+    case 1:
+        iniciarMonitoramento()
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa")
+        os.Exit(0)
+    default:
+        fmt.Println("Não conheço este comando")
+        os.Exit(-1)
+    }
+}COPIAR CÓDIGO
+Agora, além de devolver o nome, vamos fazer com quê a função também retorne a idade, para isso, basta separar os retornos por vírgula:
+
+// restante do código omitido
+
+func devolveNomeEIdade() string {
+    nome := "Douglas"
+    idade := 24
+    return nome, idade
+}COPIAR CÓDIGO
+Além disso, precisamos adicionar o tipo int como retorno da função. Nesse caso, quando temos mais de um tipo, precisamos colocá-lo entre parênteses:
+
+// restante do código omitido
+
+func devolveNomeEIdade() (string, int) {
+    nome := "Douglas"
+    idade := 24
+    return nome, idade
+}COPIAR CÓDIGO
+Logo, o primeiro valor que a função retorna é uma string, e o segundo é um número inteiro. E como agora a função retorna dois valores, nós precisamos criar duas variáveis:
+
+// restante do código omitido
+
+func main() {
+
+    //exibeIntroducao()
+    //exibeMenu()
+
+    nome, idade := devolveNomeEIdade()
+    fmt.Println(nome, "tem", idade, "anos")
+
+    comando := leComando()
+
+    switch comando {
+    case 1:
+        iniciarMonitoramento()
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa")
+        os.Exit(0)
+    default:
+        fmt.Println("Não conheço este comando")
+        os.Exit(-1)
+    }
+}COPIAR CÓDIGO
+Com isso, conseguimos criar uma função que retorna dois valores, uma string e um inteiro.
+
+Como ignorar algum retorno da função?
+Isso é bem interessante no Go, e o mesmo ocorre com a função Get, ela retorna a resposta da requisição e um possível erro que possa ter ocorrido. Mas e se só estamos interessados em somente um dos retornos, como devemos fazer?
+
+Quando não queremos saber de um dos retornos, queremos ignorá-lo, nós utilizamos o operador de identificador em branco (_):
+
+// restante do código omitido
+
+func main() {
+
+    //exibeIntroducao()
+    //exibeMenu()
+
+    _, idade := devolveNomeEIdade()
+    fmt.Println(idade)
+
+    comando := leComando()
+
+    switch comando {
+    case 1:
+        iniciarMonitoramento()
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa")
+        os.Exit(0)
+    default:
+        fmt.Println("Não conheço este comando")
+        os.Exit(-1)
+    }
+}COPIAR CÓDIGO
+Esse operador diz para o Go ignorar o retorno, no nosso caso, o primeiro deles, pois só estamos interessados no segundo retorno. Então, se não queremos algum retorno de uma determinada função, no momento em que formos declarar as variáveis, basta utilizar esse operador no seu lugar.
+
+Do mesmo jeito, como não queremos tratar possíveis erros de requisição nesse momento, podemos ignorar esse retorno:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+    site := "https://www.alura.com.br"
+    resp, _ := http.Get(site)
+    fmt.Println(resp)
+}COPIAR CÓDIGO
+Feito isso, podemos voltar com o código que havíamos comentado, e remover a função que criamos, visto que ela foi feita somente para entendermos as funções de múltiplos retornos:
+
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "os"
+)
+
+func main() {
+
+    exibeIntroducao()
+    exibeMenu()
+    comando := leComando()
+
+    switch comando {
+    case 1:
+        iniciarMonitoramento()
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa")
+        os.Exit(0)
+    default:
+        fmt.Println("Não conheço este comando")
+        os.Exit(-1)
+    }
+}
+
+func exibeIntroducao() {
+    nome := "Douglas"
+    versao := 1.2
+    fmt.Println("Olá, sr.", nome)
+    fmt.Println("Este programa está na versão", versao)
+}
+
+func exibeMenu() {
+    fmt.Println("1- Iniciar Monitoramento")
+    fmt.Println("2- Exibir Logs")
+    fmt.Println("0- Sair do Programa")
+}
+
+func leComando() int {
+    var comandoLido int
+    fmt.Scan(&comandoLido)
+    fmt.Println("O comando escolhido foi", comandoLido)
+
+    return comandoLido
+}
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+    site := "https://www.alura.com.br"
+    resp, _ := http.Get(site)
+    fmt.Println(resp)
+}COPIAR CÓDIGO
+Com isso, podemos seguir com a construção da nossa aplicação, a partir do próximo vídeo.
+
+@@04
+Capital do Estado
+
+Manoela está fazendo um programa para imprimir informações sobre determinada cidade. Por enquanto o código está assim:
+package main
+
+import "fmt"
+
+func main() {
+    cidade, populacao, capital := devolveCidadeEPopulacao()
+    if capital {
+        fmt.Println("A capital ", cidade, "tem", populacao, "habitantes")
+    } else {
+        fmt.Println("A cidade ", cidade, "tem", populacao, "habitantes")
+    }
+}
+
+func devolveCidadeEPopulacao() (string, int, bool) {
+    return "Vila Sem Nome", 4328, true
+}COPIAR CÓDIGO
+Quando ela executar o programa, o que será impresso no terminal?
+
+Alternativa correta
+A capital Vila Sem Nome tem 4328 habitantes
+ 
+Muito bem! Repare que o valor retornado pela função devolveCidadeEPopulacao para a variável capital é true.
+Alternativa correta
+Nenhum, porque o compilador não permite funções com mais de dois valores retornados.
+ 
+Alternativa correta
+A cidade Vila Sem Nome tem 4328 habitantes
+ 
+Em funções com múltiplos valores, temos que informar os tipos de cada retorno entre parênteses. E declarar variáveis separadas por vírgula para receber os valores de saída. No exemplo, a função retornou valores para três tipos diferentes.
+
+@@05
+Mas e a sigla do estado?
+
+Manoela se empolgou com seu pequeno programa e previu uma melhoria. Agora ela quer que a função retorne também o estado da cidade.
+func devolveCidadeEPopulacao() (string, int, bool, string) {
+    return "Vila Sem Nome", 4328, true, "RJ"
+}COPIAR CÓDIGO
+Mas por enquanto não quer utilizá-la no programa. O que ela deve fazer na função main abaixo para que o programa compile sem utilizar o estado?
+
+func main() {
+    cidade, populacao, capital := devolveCidadeEPopulacao()
+    if capital {
+        fmt.Println("A capital ", cidade, "tem", populacao, "habitantes")
+    } else {
+        fmt.Println("A cidade ", cidade, "tem", populacao, "habitantes")
+    }
+}COPIAR CÓDIGO
+Alternativa correta
+cidade, populacao, capital, _ := devolveCidadeEPopulacao()
+ 
+Isso aí!
+Alternativa correta
+cidade, populacao, capital, null := devolveCidadeEPopulacao()
+ 
+Alternativa correta
+Nada. Manoela vai precisar necessariamente declarar uma variável para armazenar o estado, e em seguida utilizá-lo no programa. Assim:
+cidade, populacao, capital, estado := devolveCidadeEPopulacao()
+fmt.Println("Estado é", estado)
+ 
+Quando queremos ignorar um valor retornado em uma função que retorna valores múltiplos, usamos o símbolo _ (underscore).
+
+@@06
+Monitorando os nossos sites
+
+Agora que entendemos a questão das funções com múltiplos retornos, podemos ver o conteúdo da resposta da nossa requisição. Ao executar o programa e digitar o comando 1, temos uma resposta semelhante a essa:
+&{200 OK 200 HTTP/2.0 2 0 map[X-Cloud-Trace-Context:[6f3fa7e590ac68bd43d76c82a67df476] Date:[Tue, 13 Jun 2017 21:20:36
+GMT] Server:[Google Frontend] X-Ua-Compatible:[IE=edge,chrome=1] Expires:[Tue, 13 Jun 2017 21:50:36 GMT] Content-Type:[
+text/html] Cache-Control:[public, max-age=1800] Age:[1298] X-Dns-Prefetch-Control:[on]] 0xc4200d4900 -1 [] false true m
+ap[] 0xc42000a800 0xc4203a3080}COPIAR CÓDIGO
+Nessa resposta, temos o status da requisição, a data, os cabeçalhos, entre outras informações. O que nos informa se um site carregou com sucesso, ou teve algum problema, é o status da requisição. Quando temos um status 200, significa que o site foi carregado perfeitamente. Então, se obtivermos algum status diferente de 200, significa que o nosso site está com problema.
+
+Para saber o status da resposta, podemos acessar a sua propriedade StatusCode. Logo, podemos fazer um if, se o status for 200, nós imprimimos uma mensagem de sucesso, mas se não for, nós imprimimos uma mensagem dizendo que o site está com problema, imprimindo o status em seguida:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+    site := "https://www.alura.com.br"
+    resp, _ := http.Get(site)
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+    }
+}COPIAR CÓDIGO
+Ao executar o programa, recebemos uma mensagem de sucesso. Para não termos que ficar dependendo do site da Alura cair, podemos inventar uma URL inexistente, por exemplo:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+    // site com URL inexistente
+    site := "https://www.alura.com.br/askjdbahsbciahsbca"
+    resp, _ := http.Get(site)
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+    }
+}COPIAR CÓDIGO
+Assim recebemos um status code 404. Ou podemos utilizar o site https://random-status-code.herokuapp.com/, que nos retorna um status diferente à cada requisição.
+
+Colocando o nosso programa em loop
+Conseguimos monitorar o site, mas assim que monitoramos, o programa é encerrado. O ideal é que o programa fique rodando em loop, eternamente, e só pare de rodar quando nós quisermos.
+
+Em outras linguagens de programação, poderíamos utilizar o while, mas ele não existe no Go! Para isso, vamos utilizar a instrução for, sem passar nada para ela, pois assim ela ficará em loop eternamente:
+
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "os"
+)
+
+func main() {
+    exibeIntroducao()
+
+    for {
+        exibeMenu()
+        comando := leComando()
+
+        switch comando {
+        case 1:
+            iniciarMonitoramento()
+        case 2:
+            fmt.Println("Exibindo Logs...")
+        case 0:
+            fmt.Println("Saindo do programa")
+            os.Exit(0)
+        default:
+            fmt.Println("Não conheço este comando")
+            os.Exit(-1)
+        }
+    }
+}
+
+// outras funções omitidasCOPIAR CÓDIGO
+Agora, ao rodar o nosso programa, vemos que após digitar o comando e ter o seu código executado, o menu volta a ser exibido, logo o nosso código está em loop. Para sair do loop, basta que digitemos a opção 0.
+
+Com isso, avançamos mais na nossa aplicação, nos próximos capítulos colocaremos mais sites para o programa monitorar, escrever no log, entre outras funcionalidades!
+
+@@07
+Resultado de uma requisição HTTP
+
+Suponha que capturemos o resultado da função http.Get assim:
+resultado, _ := http.Get("https://alura.com.br")COPIAR CÓDIGO
+Qual propriedade usaremos para verificar o código de retorno de uma requisição HTTP?
+
+Alternativa correta
+resultado.HttpStatus
+ 
+Alternativa correta
+resultado.StatusCode
+ 
+Isso aí!
+Alternativa correta
+http.StatusCode
+
+@@08
+Ao infinito e além!
+
+O que Fabi deve colocar no seu programa Go para que ele tenha um loop infinito?
+Alternativa correta
+for {
+
+}
+ 
+Boa!
+Alternativa correta
+for () {
+
+}
+ 
+Alternativa correta
+while true {
+
+}
+
+@@09
+Mãos na Massa: Monitorando um site
+
+Começando deste ponto? Você pode fazer o DOWNLOAD completo do projeto do capítulo anterior e continuar seus estudos a partir deste capítulo.
+Neste exercício vamos iniciar o monitoramento de nossos sites e colocar o nosso programa para funcionar até que solicitemos o contrário.
+
+1- Vamos implementar a primeira funcionalidade do nosso script, que é a de monitoramento de um site. Crie a função iniciarMonitoramento, que fará uso do pacote net/http para fazer uma requisição para um site da web. Depois faça a chamada dela no primeiro case do switch.
+
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "os"
+)
+
+func main(){
+    //restante da função 
+
+    switch comando {
+    case 1:
+        iniciarMonitoramento()
+    //restante do switch
+    }
+
+}
+
+// outras funções
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+    site := "https://www.alura.com.br/"
+    resp, _ := http.Get(site)
+}COPIAR CÓDIGO
+2- Vamos fazer uma verificação através do status code da requisição para averiguar se o site está online ou sofreu alguma queda. Teste para ver se o status code é 200 e exiba mensagens de acordo. Utilize o operador _ para não ter lidar com o segundo parâmetro de erro agora.
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+    site := "https://www.alura.com.br"
+    resp, _ := http.Get(site)
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+    }
+}COPIAR CÓDIGO
+3- Agora com a função de monitoramento pronta, vamos colocar um loop infinito na função main, para que o usuário possa acessar o menu repetidas vezes até que ele escolha sair. Para isto, utilize a instrução for pura:
+
+func main() {
+
+    exibeIntroducao()
+
+    for {
+        exibeMenu()
+        comando := leComando()
+
+        switch comando {
+        case 1:
+            iniciarMonitoramento()
+        // restante do switch
+        }
+
+    }
+}
+COPIAR CÓDIGO
+Pronto, agora o nosso usuário já consegue monitorar pelo menos um site até quando ele desejar sair do programa!
+
+https://s3.amazonaws.com/caelum-online-public/624-golang/03/projetos/alura-golang-stage-fim-cap03.zip
+
+@@10
+O que aprendemos?
+
+O que aprendemos?
+Pacote net/http, com funcionalidades de acesso à internet, de requisições web
+Entre elas, a função http.Get, para fazer uma requisição GET para um site
+Funções com múltiplos retornos
+Identificador em branco, para ignorar um ou mais retornos de uma função
+Status de uma requisição
+Uma requisição de sucesso possui status code 200
+A instrução for, para deixar o nosso programa em loop eterno
