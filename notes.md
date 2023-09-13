@@ -987,3 +987,669 @@ Goias no google
 Por isto, a dica que dou para vocês é sempre que for realizar buscas online relacionados a linguagem de programação Go, utilizem o termo golang que é o termo comumente adotado por desenvolvedores do mundo quando estão falando da linguagem Go, assim suas buscas no Google e no Stackoverflow serão mais precisas!
 
 Buscando por golang
+
+#### 13/09/2023
+
+@03-Controle de fluxo com Go
+
+@@01
+Controle de fluxo com if
+
+Dando sequência à construção da nossa aplicação, agora que já conseguimos capturar o comando escolhido pelo usuário, podemos fazer algo de acordo com o comando digitado.
+Se o usuário escolheu o comando 1, vamos fazer algo, se ele escolheu o comando 2, fazemos outra coisa, e assim por diante. Quando queremos saber se o usuário escolheu tal comando, precisamos utilizar a instrução if da programação.
+
+A condição do if, no Go, não fica entre parênteses, como já é prática de outras linguagens:
+
+if comando == 1 {
+
+}COPIAR CÓDIGO
+E a condição deve sempre retornar um booleano, ou seja, true ou false. Como queremos testar os 3 comandos, vamos colocá-lo no if:
+
+package main
+
+import "fmt"
+
+func main() {
+    nome := "Douglas"
+    versao := 1.1
+    fmt.Println("Olá, sr.", nome)
+    fmt.Println("Este programa está na versão", versao)
+
+    fmt.Println("1- Iniciar Monitoramento")
+    fmt.Println("2- Exibir Logs")
+    fmt.Println("0- Sair do Programa")
+
+    var comando int
+    fmt.Scan(&comando)
+    fmt.Println("O comando escolhido foi", comando)
+
+    if comando == 1 {
+
+    } else if comando == 2 {
+
+    } else if comando == 0 {
+
+    }
+}COPIAR CÓDIGO
+E por último, se não for nenhum comando conhecido, vamos imprimir uma mensagem, demonstrando que não conhecemos o comando digitado. Vamos aproveitar e colocar as mensagens dos outros comandos:
+
+package main
+
+import "fmt"
+
+func main() {
+    nome := "Douglas"
+    versao := 1.1
+    fmt.Println("Olá, sr.", nome)
+    fmt.Println("Este programa está na versão", versao)
+
+    fmt.Println("1- Iniciar Monitoramento")
+    fmt.Println("2- Exibir Logs")
+    fmt.Println("0- Sair do Programa")
+
+    var comando int
+    fmt.Scan(&comando)
+    fmt.Println("O comando escolhido foi", comando)
+
+    if comando == 1 {
+        fmt.Println("Monitorando...")
+    } else if comando == 2 {
+        fmt.Println("Exibindo Logs...")
+    } else if comando == 0 {
+        fmt.Println("Saindo do programa...")
+    } else {
+        fmt.Println("Não conheço este comando")
+    }
+}COPIAR CÓDIGO
+Com isso, concluímos os ifs, que não possui muito mistério, as diferenças para as outras linguagens é o não uso de parênteses na condição, que deve sempre retornar um booleano.
+
+@@02
+Discutindo maioridade...
+PRÓXIMA ATIVIDADE
+
+Para qual das alternativas abaixo o Go vai permitir compilarmos o if abaixo?
+if maiorDeIdade {
+
+}COPIAR CÓDIGO
+Alternativa correta
+maiorDeIdade := true
+ 
+Já que a variável é avaliada pelo Go como booleana por causa do valor de inicialização true, o if funcionará.
+Alternativa correta
+var idade int
+maiorDeIdade = idade >= 21
+ 
+Alternativa correta
+maiorDeIdade := 23
+ 
+Alternativa correta
+idade int
+maiorDeIdade := idade > 21
+ 
+Lembre-se que o fluxo condicional if no Go só permite expressões booleanas.
+
+@@03
+Controle de fluxo com switch
+
+Além do if, sabemos que existem outras instruções para controlarmos o fluxo da nossa aplicação. E uma que se adéqua melhor ao nosso código é a instrução switch.
+Essa instrução recebe uma variável e dá possíveis situações para cada valor dessa variável. Nós dizemos quais são os casos, e para cada um há uma situação. Caso a variável valha 0, acontece algo, caso valha 1, acontece outra, e assim por diante.
+
+switch comando {
+case 1:
+    fmt.Println("Monitorando...")
+case 2:
+    fmt.Println("Exibindo Logs...")
+case 0:
+    fmt.Println("Saindo do programa...")
+}COPIAR CÓDIGO
+Mas se o valor da variável não estiver em nenhum dos casos listados? Para isso, existe o caso default, que é o que será executado se os nossos casos não forem atendidos:
+
+package main
+
+import "fmt"
+
+func main() {
+    nome := "Douglas"
+    versao := 1.1
+    fmt.Println("Olá, sr.", nome)
+    fmt.Println("Este programa está na versão", versao)
+
+    fmt.Println("1- Iniciar Monitoramento")
+    fmt.Println("2- Exibir Logs")
+    fmt.Println("0- Sair do Programa")
+
+    var comando int
+    fmt.Scan(&comando)
+    fmt.Println("O comando escolhido foi", comando)
+
+    switch comando {
+    case 1:
+        fmt.Println("Monitorando...")
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa...")
+    default:
+        fmt.Println("Não conheço este comando")
+    }
+}COPIAR CÓDIGO
+Ao executar o programa, ele funciona como antes, mas desta vez com uma nova instrução de controle de fluxo.
+
+Uso do break
+Para quem vem de outras linguagens de programação, pode estranhar o não uso do break, ao final do código de cada caso do switch. O break serviria para evitar a execução do código de mais de um caso, se mais de um caso for atendido.
+
+No Go, ele não possui o break, pois somente um caso pode ser atendido. O primeiro caso que for atendido, terá o seu código executado e o switch será encerrado.
+
+@@04
+Cardápio apetitoso
+PRÓXIMA ATIVIDADE
+
+Mário foi contratado por um restaurante para desenvolver um programa que solicita a escolha do cardápio. Ele implementou na linguagem Go e seu código está listado abaixo.
+package main
+
+import "fmt"
+
+func main() {
+    var prato string
+    fmt.Println("Digite seu prato preferido...")
+    fmt.Println("P - Pizza")
+    fmt.Println("H - Hambúrguer")
+    fmt.Println("B - Bife com fritas")
+    fmt.Println("S - Salada Caesar")
+    fmt.Println("F - Salada de Frutas")
+    fmt.Println("E - Estrogonofe")
+    fmt.Println("O - Outros")
+    fmt.Scan(&prato)
+
+    switch prato {
+    case "B":
+        fmt.Println("Com batatas Palito ou Noisete?")
+    case "H":
+        fmt.Println("Com Queijo ou com Ovo?")
+    case "P":
+        fmt.Println("Calabresa ou Napolitana?")
+    case "S":
+        fmt.Println("Alface ou Rúcula?")
+    case "F":
+        fmt.Println("Kiwi ou Frango?")
+    case "E":
+        fmt.Println("Carne ou Frango?")
+    case "O":
+        fmt.Println("Não gostou de nosso cardápio?")
+    default:
+        fmt.Println("Não entendi seu paladar...")
+    }
+}COPIAR CÓDIGO
+Quando o cliente digitar b, o que será impresso?
+
+Alternativa correta
+Com batatas Palito ou Noisete?
+ 
+Alternativa correta
+Não entendi seu paladar...
+ 
+Como não houve nenhum tratamento para reconhecer a caixa alta do valor entrado pelo usuário, a alternativa default será executada.
+Alternativa correta
+Bife com fritas
+ 
+A palavra reservada switch permite incluir várias alternativas de execução para o programa. Cada alternativa deve utilizar case, e a alternativa executada quando nenhuma condição for atendida é default.
+
+@@05
+Como dizia Tim Maia, olha o breque!
+PRÓXIMA ATIVIDADE
+
+Em outras linguagens, após cada alternativa é necessário colocar a palavra reservada break. Quais são os comportamentos do compilador da linguagem Go?
+Alternativa correta
+Não precisa colocar break.
+ 
+No Go no uso do break não é obrigatório.
+Alternativa correta
+Se o desenvolvedor colocar break, o compilador não vai reclamar.
+ 
+No Go no uso do break não é obrigatório.
+Alternativa correta
+O compilador obriga a colocar o break no final de cada alternativa.
+ 
+Se o desenvolvedor colocar o break, o compilador não vai reclamar. Por exemplo na listagem abaixo.
+switch comando {
+case 1:
+    fmt.Println("Monitorando... ")
+    break
+case 2:
+    fmt.Println("Exibindo logs...")
+    break
+case 0:
+    fmt.Println("Saindo do programa")
+    break
+default:
+    fmt.Println("Não conheço esse comando")
+    break
+}COPIAR CÓDIGO
+Porém, ele não é obrigatório. Apenas uma alternativa é executada por avaliação switch.
+
+@@06
+Introdução às funções
+
+Queremos agora construir as funções do nosso programa, isso inclui a função que monitora os sites, que exibe os logs, que sai do programa, entre outras. Mas se implementarmos o código dentro de cada caso nosso, teremos uma centralização do nosso código na função main, ou seja, teremos pouco reuso de código, tornando-o pouco modularizado.
+Por isso, chegou a hora de organizarmos o nosso código, quebrando-o em funções. Teremos uma função específica para exibir a mensagem de boas vindas, uma para capturar o comando do usuário, e uma função para cada caso do nosso programa.
+
+Função para exibir a introdução do programa
+Já sabemos como declarar uma função, já que já declaramos a função main, então vamos criar a função exibeIntroducao, com o nosso código de boas vindas:
+
+package main
+
+import "fmt"
+
+func main() {
+
+    exibeIntroducao()
+
+    fmt.Println("1- Iniciar Monitoramento")
+    fmt.Println("2- Exibir Logs")
+    fmt.Println("0- Sair do Programa")
+
+    var comando int
+    fmt.Scan(&comando)
+    fmt.Println("O endereço da minha variavel comando é", &comando)
+    fmt.Println("O comando escolhido foi", comando)
+
+    switch comando {
+    case 1:
+        fmt.Println("Monitorando...")
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa...")
+    default:
+        fmt.Println("Não conheço este comando")
+    }
+}
+
+func exibeIntroducao() {
+    nome := "Douglas"
+    versao := 1.1
+    fmt.Println("Olá, sr.", nome)
+    fmt.Println("Este programa está na versão", versao)
+}COPIAR CÓDIGO
+É comum em Go, utilizarmos o padrão camelCase para nome das funções, ou seja, a primeira letra minúscula e a cada nova palavra, sua primeira letra será maiúscula, sem espaço entre elas.
+
+Retornando um valor em uma função
+Agora, vamos criar a função leComando, para ler o comando digitado pelo usuário e retornar o seu valor para nós. No Go, colocamos o tipo do retorno da função após o nome da mesma:
+
+func leComando() int {
+
+}COPIAR CÓDIGO
+E para retornar um valor, utilizarmos o return:
+
+func leComando() int {
+    var comandoLido int
+    fmt.Scan(&comandoLido)
+    fmt.Println("O comando escolhido foi", comandoLido)
+
+    return comandoLido
+}COPIAR CÓDIGO
+Agora, na função main, nós chamamos essa função, já atribuindo-a à variável comando, utilizando o operador de declaração de variável curta:
+
+package main
+
+import "fmt"
+
+func main() {
+
+    exibeIntroducao()
+
+    fmt.Println("1- Iniciar Monitoramento")
+    fmt.Println("2- Exibir Logs")
+    fmt.Println("0- Sair do Programa")
+
+    comando := leComando()
+
+    switch comando {
+    case 1:
+        fmt.Println("Monitorando...")
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa...")
+    default:
+        fmt.Println("Não conheço este comando")
+    }
+}
+
+func exibeIntroducao() {
+    nome := "Douglas"
+    versao := 1.1
+    fmt.Println("Olá, sr.", nome)
+    fmt.Println("Este programa está na versão", versao)
+}
+
+func leComando() int {
+    var comandoLido int
+    fmt.Scan(&comandoLido)
+    fmt.Println("O comando escolhido foi", comandoLido)
+
+    return comandoLido
+}COPIAR CÓDIGO
+O Go verá que a variável comando será o retorno da função leComando, que é um inteiro, logo a variável também será um inteiro.
+
+Função para exibir o menu
+Do mesmo jeito, vamos extrair para uma função o código que exibe o menu do nosso programa:
+
+package main
+
+import "fmt"
+
+func main() {
+
+    exibeIntroducao()
+    exibeMenu()
+    comando := leComando()
+
+    switch comando {
+    case 1:
+        fmt.Println("Monitorando...")
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa...")
+    default:
+        fmt.Println("Não conheço este comando")
+    }
+}
+
+func exibeIntroducao() {
+    nome := "Douglas"
+    versao := 1.1
+    fmt.Println("Olá, sr.", nome)
+    fmt.Println("Este programa está na versão", versao)
+}
+
+func exibeMenu() {
+    fmt.Println("1- Iniciar Monitoramento")
+    fmt.Println("2- Exibir Logs")
+    fmt.Println("0- Sair do Programa")
+}
+
+func leComando() int {
+    var comandoLido int
+    fmt.Scan(&comandoLido)
+    fmt.Println("O comando escolhido foi", comandoLido)
+
+    return comandoLido
+}COPIAR CÓDIGO
+Agora que já temos uma noção de como construir funções básicas, vamos nos aprofundar nisso ao longo do treinamento, mas já podemos começar pela função que sai do programa.
+
+Saindo do programa
+Podemos criar uma função para sair do programa, mas o seu código possuiria somente uma linha, vamos fazer isso diretamente no seu caso, dentro do switch. Para sair do programa, é uma boa prática retornarmos um status 0 para o sistema operacional.
+
+Para fazer isso com Go, precisamos importar o pacote que se comunica com o sistema operacional, o pacote os. Importando esse pacote, chamamos a sua função Exit, passando o valor 0 para ela, indicando para o sistema operacional que o programa foi encerrado com sucesso. A função main ficará assim:
+
+package main
+
+import "fmt"
+import "os"
+
+func main() {
+
+    exibeIntroducao()
+    exibeMenu()
+    comando := leComando()
+
+    switch comando {
+    case 1:
+        fmt.Println("Monitorando...")
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa...")
+        os.Exit(0)
+    default:
+        fmt.Println("Não conheço este comando")
+    }
+}COPIAR CÓDIGO
+Do mesmo jeito, há uma forma de informar o sistema operacional que ocorreu algum problema na execução do programa, como por exemplo quando o usuário digita um comando desconhecido. Para isso, passamos o valor -1 para a função Exit. Então a função main ficará assim:
+
+package main
+
+import "fmt"
+import "os"
+
+func main() {
+
+    exibeIntroducao()
+    exibeMenu()
+    comando := leComando()
+
+    switch comando {
+    case 1:
+        fmt.Println("Monitorando...")
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa...")
+        os.Exit(0)
+    default:
+        fmt.Println("Não conheço este comando")
+        os.Exit(-1)
+    }
+}COPIAR CÓDIGO
+Quando o usuário digitar um comando desconhecido, ao invés de encerrar o programa, podemos pedir para o usuário digitar um novo comando. Veremos isso mais à frente.
+
+@@07
+Retornando valores numa função
+PRÓXIMA ATIVIDADE
+
+Observe o código abaixo.
+package main
+
+import "fmt"
+
+func main() {
+    palavraDigitada := lePalavra()
+    fmt.Println("A palavra digitada foi", palavraDigitada)
+}
+
+func lePalavra() string {
+    var palavra string
+    fmt.Print("Digite uma palavra: ")
+    fmt.Scan(&palavra)
+    return palavra
+}COPIAR CÓDIGO
+O que está faltando para que ele compile e a função retorne a palavra digitada para a função principal?
+
+Alternativa correta
+Nada, pois o código está compilando normalmente.
+ 
+Isso aí! A função lePalavra retorna uma string com o valor digitado pelo usuário.
+Alternativa correta
+Colocar o símbolo & na variável de retorno da função, para indicar que queremos passar a referência da mesma.
+return &palavra
+ 
+Alternativa correta
+Colocar o tipo antes da declaração do nome da função.
+func string lePalavra() {
+
+@@08
+Saindo com graça
+PRÓXIMA ATIVIDADE
+
+O que precisamos adicionar em nosso programa para sair dele com código de status de sucesso?
+Alternativa correta
+import "os"
+os.Exit(0)
+ 
+Isso aí! A função Exit fica no pacote os, que deve ser importado.
+Alternativa correta
+import "system"
+os.Exit(0)
+ 
+Alternativa correta
+import "os"
+os.Quit(0)
+ 
+Alternativa correta
+import "os"
+os.Exit(-1)
+ 
+Precisamos usar a função Exit que está disponível no pacote os.
+Para isso é necessário importar o pacote os
+
+import "os"COPIAR CÓDIGO
+E no local devido chamar a função Exit com código 0, que representa uma saída bem sucedida.
+
+os.Exit(0)
+
+@@09
+Mãos na Massa: Organização e Fluxo
+PRÓXIMA ATIVIDADE
+
+Começando deste ponto? Você pode fazer o DOWNLOAD completo do projeto do capítulo anterior e continuar seus estudos a partir deste capítulo.
+Neste capitulo vamos determinar para qual fluxo do nosso programa o usuário deve seguir a partir do comando que ele escolheu, e além disso vamos começar a organizar nosso código em pequenas funções.
+
+1- O primeiro passo vai ser criar um switch com todas as opções que oferecemos ao usuário até agora, e um caso de default para quando o usuário colocar algum comando desconhecido:
+
+//hello.go
+
+package main
+
+import "fmt"
+
+func main() {
+    // ... restante da função main
+    var comando int
+    fmt.Scan(&comando)
+
+    fmt.Println("O valor da variável comando é:", comando)
+
+    switch comando {
+    case 1:
+        fmt.Println("Monitorando...")
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa...")
+    default:
+        fmt.Println("Não conheço este comando")
+    }
+}COPIAR CÓDIGO
+_ Aqui colocamos uma opção no switch para cada item do menu que tinhamos no menu anteriormente_
+
+2- Agora vamos começar a organizar nosso código em pequenas funções, cada uma com sua responsabilidade. A primeira a ser criada será a função que vai exibir a introdução de boas vindas para o usuário. Extrai este código da função main e coloque na função exibeIntroducao():
+
+//hello.go
+func main() {
+
+    exibeIntroducao()
+
+    fmt.Println("1- Iniciar Monitoramento")
+    fmt.Println("2- Exibir Logs")
+    fmt.Println("0- Sair do Programa")
+
+    // ...  restante da função main
+}
+func exibeIntroducao(){
+    nome := "Douglas"
+    versao := 1.1
+    fmt.Println("Olá, sr(a).", nome)
+    fmt.Println("Este programa está na versão", versao)
+}COPIAR CÓDIGO
+_ Não esqueça de chamar a função exibeIntroducao() na função main. _
+
+3- Vamos extrair também o código que exibe o menu de opções do usuário para uma função externa, chamda de exibeMenu:
+
+func main() {
+
+    exibeIntroducao()
+    exibeMenu()
+
+    var comando int
+    fmt.Scan(&comando)
+    fmt.Println("O valor da variável comando é:", comando)
+    //... restante da função
+
+}
+
+func exibeIntroducao() {
+    //... restante da função
+}
+
+func exibeMenu(){
+    fmt.Println("1- Iniciar Monitoramento")
+    fmt.Println("2- Exibir Logs")
+    fmt.Println("0- Sair do Programa")    
+}COPIAR CÓDIGO
+_ Não esqueça de chamar a função exibeMenu() na função main. _
+
+4- Por último, vamos criar uma função responsável por ler os comandos do usuário e exportar esta função da main também. A função leComando deve retornar um int com o comando lido pelo usuário:
+
+func main() {
+
+    exibeIntroducao()
+    exibeMenu()
+    comando := leComando()
+
+    switch comando {        
+    //... restante da função
+    }
+
+}
+
+func exibeIntroducao() {
+    //... restante da função
+}
+
+func exibeMenu(){
+    //... restante da função
+}
+
+func leComando() int {
+    var comandoLido int
+    fmt.Scan(&comandoLido)
+    fmt.Println("O valor da variável comando é:", comandoLido)
+
+    return comandoLido
+}COPIAR CÓDIGO
+_ Não esqueça de capturar o comando lido na função main, para que ele possa ser utilizado pelo switch _
+
+5- Vamos por último adicionar nos itens finais do switch um ponto de saída para o nosso script, retornando para o sistema operacional se tudo correu bem ou não. Importe o pacote os do Go e utilize a função Exit() para informar o status de saída do programa:
+
+package main
+
+import "fmt"
+import "os"
+
+func main() {
+
+    exibeIntroducao()
+    exibeMenu()
+    comando := leComando()
+
+    switch comando {
+    case 1:
+        fmt.Println("Monitorando...")
+    case 2:
+        fmt.Println("Exibindo Logs...")
+    case 0:
+        fmt.Println("Saindo do programa...")
+        os.Exit(0)
+    default:
+        fmt.Println("Não conheço este comando")
+        os.Exit(-1)
+    }
+
+}
+    //... restante do arquivoCOPIAR CÓDIGO
+Pronto, nosso código está mais organizado e agora só falta implementar as funções de cada um dos casos do nosso switch.
+
+https://s3.amazonaws.com/caelum-online-public/624-golang/02/projetos/alura-golang-stage-fim-cap02.zip
+
+@@10
+O que aprendemos?
+
+O que aprendemos?
+Controle de fluxo com if
+Sua condição não fica entre parênteses e deve sempre retornar um booleano
+Controle de fluxo com switch
+Se os casos não forem atendidos, será executado o código do caso default
+Introdução às funções
+Pacote os, para encerrar o programa
