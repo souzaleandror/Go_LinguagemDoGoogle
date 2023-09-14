@@ -2918,3 +2918,631 @@ Operador de iteração range
 O range nos dá acesso a cada item da coleção, nos retornando a posição do item iterado e o próprio item daquela posição
 Constantes
 Trabalhando com o pacote time
+
+####
+
+@06-Leitura de Arquivos
+
+@@01
+Arquivos em Go
+
+O que queremos fazer agora é não ficar dependente do slice, de só monitorar os sites contidos nele. Para isso, teremos um arquivo de texto com todos os sites que queremos monitorar. Adicionaremos vários sites em um arquivo de texto e ao iniciar nosso programa, ele monitorará todos os sites especificados dentro desse arquivo.
+Para trabalhar com isso, devemos saber como trabalhamos com arquivo em Go, mais especificamente como lê-los. Para tal, criaremos a função leSitesDoArquivo, com essa responsabilidade. Além de ler os dados do arquivo, essa função os retornará em um slice:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+}COPIAR CÓDIGO
+Agora, na função iniciarMonitoramento, ao invés de criar o slice na mão, nós criamos a partir do retorna dessa função:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    // criando o slice a partir da função leSitesDoArquivo()
+    sites := leSitesDoArquivo()
+
+    for i := 0; i < monitoramentos; i++ {
+        for i, site := range sites {
+            fmt.Println("Testando site", i, ":", site)
+            testaSite(site)
+        }
+        time.Sleep(delay * time.Second)
+        fmt.Println("")
+    }
+    fmt.Println("")
+}COPIAR CÓDIGO
+Pronto, agora falta implementarmos a função. Antes de ler os dados do arquivo, devemos saber como abri-lo.
+
+Abrindo um arquivo em Go
+Para abrir um arquivo em Go, precisamos pedir ao sistema operacional que abra o arquivo para nós. E quem é o representante do sistema operacional em Go? O pacote os, que já trabalhamos anteriormente. Nele, há a função Open, que abre o arquivo e nos retorna a sua representação em memória e um possível erro que possa ocorrer, que iremos ignorar:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+    arquivo, _ := os.Open("sites.txt")
+}COPIAR CÓDIGO
+Vamos fazer um teste agora, vamos imprimir o arquivo, criar um slice vazio e retorná-lo:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+    arquivo, _ := os.Open("sites.txt")
+    fmt.Println(arquivo)
+
+    return sites
+}COPIAR CÓDIGO
+Agora, ao executar o programa e iniciar o monitoramento, vemos uma impressão <nil>. O que isso significa? Isso equivale ao null de outras linguagens de programação, ou seja, nosso arquivo está nulo. Isso acontece pois estamos abrindo um arquivo que não existe!
+
+Mas como sabemos disso? Sabemos pois foi um erro proposital, já que estamos sendo descuidados, pois estamos ignorando os erros. Em nenhum momentos estamos tratando os erros da linguagem de programação, já que, ao tentar abrir um arquivo que não existe, era para o sistema operacional nos avisar isso, mas estamos ignorando esses avisos, tanto no momento de abrir um arquivo, quanto no momento de realizar as requisições para os sites.
+
+Então, vamos ver como tratar esses erros no próximo vídeo.
+
+@@02
+Abrindo arquivo no Go
+PRÓXIMA ATIVIDADE
+
+Qual o código para abrir corretamente um arquivo no Go?
+Alternativa correta
+arquivo, error = os.Open("sites.txt")
+ 
+Alternativa correta
+arquivo, error = os.ReadFile("sites.txt")
+ 
+Alternativa correta
+arquivo, _ := os.Open("sites.txt")
+ 
+Isso aí! Podemos utilizar a função os.Open quando queremos abrir um arquivo em Go.
+
+@@03
+Detectando erros
+
+Para tratar os erros, primeiramente devemos substituir o operador de identificador em branco (_) pela variável err, padrão para os erros em Go:
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+    arquivo, err := os.Open("sites.txt")
+    fmt.Println(arquivo)
+
+    return sites
+}COPIAR CÓDIGO
+E agora, se err não for nulo, significa que houve um erro, então vamos imprimi-lo:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+    arquivo, err := os.Open("sites.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    fmt.Println(arquivo)
+
+    return sites
+}COPIAR CÓDIGO
+Agora, ao executar o programa e iniciar o monitoramento, vemos a seguinte impressão:
+
+Ocorreu um erro: open sites.txt: no such file or directoryCOPIAR CÓDIGO
+Agora está bem claro o que aconteceu, que o arquivo, ou o diretório, não foi encontrado. Agora, vamos tratar do outro erro que estamos ignorando, no momento em que fazemos a requisição para o site, na função testaSite:
+
+// restante do código omitido
+
+func testaSite(site string) {
+
+    resp, err := http.Get(site)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+    }
+}COPIAR CÓDIGO
+Agora que já estamos detectando os erros do programa, vamos prosseguir com a leitura do arquivo.
+
+@@04
+Capturando erros
+PRÓXIMA ATIVIDADE
+
+Suponha que o arquivo "sites.txt" não existe. Quando o código abaixo é executado, a variável err conterá o erro de arquivo inexistente.
+arquivo, err := os.Open("sites.txt")COPIAR CÓDIGO
+O que o programador deve fazer para tratar esse erro?
+
+Alternativa correta
+Verificar se a variável err é diferente de nil, e mostrar a mensagem de erro no terminal.
+if err != nil {
+  fmt.Println("Ocorreu um erro:", err)
+}
+ 
+Isso aí!
+Alternativa correta
+Usar a estrutura 'try capture'.
+try {
+  arquivo, err := os.Open("sites.txt")
+} capture {
+  fmt.Println("Ocorreu um erro:", err)
+}
+ 
+Alternativa correta
+Usar um try catch.
+try {
+  arquivo, err := os.Open("sites.txt")
+} catch {
+  fmt.Println("Ocorreu um erro:", err)
+}
+
+@@05
+Lendo de um arquivo
+
+Se o erro que está ocorrendo é que o sites.txt não existe, então vamos criá-lo dentro da pasta hello, com o conteúdo que estava no nosso slice:
+https://random-status-code.herokuapp.com/
+https://www.alura.com.br
+https://www.caelum.com.brCOPIAR CÓDIGO
+Agora, ao executar o programa e iniciar o monitoramento, vemos um código estranho sendo impresso, isso acontece pois o que a função Open nos retorna nada mais é do que um ponteiro para o arquivo em si.
+
+Então, precisamos ler o arquivo de outro jeito, e há diversas maneiras para isso. Uma delas, um jeito fácil e rápido para ler um arquivo inteiro, sem ter que ler linha a linha, é utilizar o pacote io/ioutil.
+
+Lendo os dados de um arquivo
+Através do pacote io/ioutil, chamamos a função ReadFile, para ler o arquivo passado:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+    arquivo, err := ioutil.ReadFile("sites.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    fmt.Println(arquivo)
+
+    return sites
+}COPIAR CÓDIGO
+Essa função nos retorna o arquivo em um array de bytes, então basta convertê-los para uma string através da função string:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+    arquivo, err := ioutil.ReadFile("sites.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    fmt.Println(string(arquivo))
+
+    return sites
+}COPIAR CÓDIGO
+Ao executar o programa, iniciar o monitoramento, vemos o conteúdo do arquivo sendo impresso no console! Mas esse é um jeito bom para quem quer exibir o conteúdo todo do arquivo, o que não é muito útil para nós, já que queremos ler cada site de uma vez, para salvar cada um dentro do slice.
+
+Lendo a primeira linha do arquivo
+Para ler o arquivo linha a linha, vamos ver uma terceira forma de ler arquivos em Go, utilizando o pacote bufio. Para isso, vamos voltar à primeira leitura do arquivo, utilizando os.Open:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+    arquivo, err := os.Open("sites.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    return sites
+}COPIAR CÓDIGO
+E com o bufio, nós criamos um leitor através da função NewReader, que recebe o arquivo a ser lido:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+    arquivo, err := os.Open("sites.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    leitor := bufio.NewReader(arquivo)
+
+    return sites
+}COPIAR CÓDIGO
+Com esse leitor, temos funções que nos ajudam a ler o arquivo, lendo linha a linha, como por exemplo a ReadString, que lê uma linha do arquivo e nos retorna em forma de string. Essa função deve receber um byte delimitador, para saber até onde queremos ler a linha.
+
+No nosso caso, queremos ler a linha inteiro, ou seja, até a quebra de linha, que é representada pelo \n. Como queremos representar um byte, utilizaremos aspas simples:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+    arquivo, err := os.Open("sites.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    leitor := bufio.NewReader(arquivo)
+
+    leitor.ReadString('\n')
+
+    return sites
+}COPIAR CÓDIGO
+Essa função nos retorna a linha e um possível erro, que vamos detectar. Além disso, vamos imprimir a linha:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+
+    arquivo, err := os.Open("sites.txt")
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    leitor := bufio.NewReader(arquivo)
+
+    linha, err := leitor.ReadString('\n')
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    fmt.Println(linha)
+
+    return sites
+}COPIAR CÓDIGO
+Quando iniciamos o monitoramento, a primeira linha do arquivo é impressa. Mas queremos ler todas as linhas do arquivo, então como fazemos isso? Veremos no próximo vídeo.
+
+@@06
+Obtendo o conteúdo de um arquivo
+PRÓXIMA ATIVIDADE
+
+Observe o código abaixo, que abre o arquivo existente "sites.txt".
+package main
+
+import (
+  "fmt"
+  "bufio"
+  "os"
+)
+
+func main() {
+  arquivo, err := os.Open("sites.txt")
+  if err != nil {
+    fmt.Println("Ocorreu um erro:", err)
+  }
+  leitor := bufio.NewReader(arquivo)
+}COPIAR CÓDIGO
+O que você deve fazer para ler a primeira linha do arquivo?
+
+Alternativa correta
+linha, _ := leitor.ReadString('\n')
+ 
+Isso aí!
+Alternativa correta
+linha, _ := bufio.ReadString(leitor, '\n')
+ 
+Alternativa correta
+linha, _ := os.read(leitor)
+ 
+Alternativa correta
+linha, _ := leitor.ReadString()
+
+@@07
+Lendo múltiplas linhas
+
+Se queremos que o nosso programa leia além da primeira linha do arquivo, o código responsável por fazer a leitura deve ser executado mais de uma vez. Então, o que vamos fazer é colocar esse código dentro de um for, até dar um erro específico, o erro de EOF (End Of File), que acontece quando não há mais linha a serem lidas.
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+
+    arquivo, err := os.Open("sites.txt")
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    leitor := bufio.NewReader(arquivo)
+
+    for {
+        linha, err := leitor.ReadString('\n')
+        fmt.Println(linha)
+        if err == io.EOF {
+            fmt.Println("Ocorreu um erro:", err)
+        }
+    }
+
+    return sites
+}COPIAR CÓDIGO
+Mas como saímos do for? Se houver o erro, que já estamos verificando, nós damos um break, que faz com que o código saia do loop:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+
+    arquivo, err := os.Open("sites.txt")
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    leitor := bufio.NewReader(arquivo)
+
+    for {
+        linha, err := leitor.ReadString('\n')
+        fmt.Println(linha)
+        if err == io.EOF {
+            break
+        }
+    }
+
+    return sites
+}COPIAR CÓDIGO
+Ao iniciar o monitoramento, vemos a seguinte impressão:
+
+https://random-status-code.herokuapp.com/
+
+https://www.alura.com.br
+
+https://www.caelum.com.brCOPIAR CÓDIGO
+A impressão está sendo desse jeito pois estamos pulando linha no arquivo, então ela é lida também. O leitor lê a linha, incluindo o \n, por isso que fica esse pulo de linha na hora de impressão.
+
+Logo, devemos remover essa quebra de linha da linha lida, antes de adicioná-la ao slice. Para isso, existe a função TrimSpace, do pacotes strings, que remove as quebras de linha e espaços ao final de uma string:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+
+    arquivo, err := os.Open("sites.txt")
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    leitor := bufio.NewReader(arquivo)
+
+    for {
+        linha, err := leitor.ReadString('\n')
+        linha = strings.TrimSpace(linha)
+        fmt.Println(linha)
+        if err == io.EOF {
+            break
+        }
+    }
+
+    return sites
+}COPIAR CÓDIGO
+Agora, as linhas são impressas sem quebra de linha. Logo, já podemos adicioná-las ao slice:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+
+    arquivo, err := os.Open("sites.txt")
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    leitor := bufio.NewReader(arquivo)
+
+    for {
+        linha, err := leitor.ReadString('\n')
+        linha = strings.TrimSpace(linha)
+        sites = append(sites, linha)
+        if err == io.EOF {
+            break
+        }
+    }
+
+    return sites
+}COPIAR CÓDIGO
+Ao executar o programa novamente e iniciar o monitoramento, podemos perceber que os sites são monitorados corretamente! Agora, se quisermos adicionar mais sites, basta colocá-los no arquivo sites.txt.
+
+Por último, devemos ser educados com o sistema operacional, se abrimos um arquivo com os.Open, após lê-lo, é uma boa prática fechá-lo com a função Close:
+
+// restante do código omitido
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+
+    arquivo, err := os.Open("sites.txt")
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    leitor := bufio.NewReader(arquivo)
+
+    for {
+        linha, err := leitor.ReadString('\n')
+        linha = strings.TrimSpace(linha)
+        sites = append(sites, linha)
+        if err == io.EOF {
+            break
+        }
+    }
+
+    arquivo.Close()
+
+    return sites
+}
+
+@@08
+Mãos na Massa: Lendo sites do arquivo
+PRÓXIMA ATIVIDADE
+
+Começando deste ponto? Você pode fazer o DOWNLOAD completo do projeto do capítulo anterior e continuar seus estudos a partir deste capítulo.
+Neste exercício vamos fazer com que os sites monitorados venham de um arquivo .txt para que fique fácil adicionar ou remover um site do monitoramento, além disto vamos colocar algumas detecções de erro em nossas funções.
+
+1- Primeiro, vamos colocar nosso aprendizado sobre erros deste capítulo para capturar os erros, o primeiro deles de uma função que já utilizamos, a http.Get() da funçao testaSite:
+
+// restante do código omitido
+
+func testaSite(site string) {
+
+    //Capturando o segundo parâmetro
+    resp, err := http.Get(site)
+    //Verificando se houve algum erro
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+    }
+}COPIAR CÓDIGO
+2- Agora vamos começar a ler os nossos sites de um arquivo .txt. Crie um arquivo de texto chamado sites.txt e coloque os sites que você quer monitorar lá, um em cada linha:
+
+sites.txt
+
+https://www.alura.com.br    
+https://random-status-code.herokuapp.com 
+https://www.caelum.com.br
+https://www.casadocodigo.com.brCOPIAR CÓDIGO
+3- Para ler este arquivo, vamos criar a função leSitesDoArquivo, que vai retornar para o nosso slice de sites preenchido de acordo com os sites do arquivo sites.txt. Crie a função leSitesDoArquivo que vai retornar um slice de strings:
+
+ func leSitesDoArquivo() []string {
+
+    var sites []string
+
+
+    return sites
+}COPIAR CÓDIGO
+4- Agora vamos abrir o arquivo de sites.txt e detectar caso algum erro aconteça na abertura. Vamos utilizar o pacote os para abrir com a função `Open:
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+
+    arquivo, err := os.Open("sites.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+
+    arquivo.Close()
+    return sites
+}COPIAR CÓDIGO
+Não esqueça de fechar o arquivo no final com a função Close() do arquivo
+
+5- Agora vamos criar um leitor com o pacote bufio, para que facilite o processo de percorrer o arquivo sites.txt:
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+
+    arquivo, err := os.Open("sites.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    leitor := bufio.NewReader(arquivo)
+
+
+    arquivo.Close()
+    return sites
+}COPIAR CÓDIGO
+6- Agora vamos utilizar um for e ler linha a linha até que o leitor encontre o EOF, o que nos dará um erro e utilizaremos a instrução break para sair do loop, indicando que chegamos ao final. Para ler cada linha utilizaremos a função ReadString do leitor, lendo até o caractere \n que indica o final da linha:
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+
+    arquivo, err := os.Open("sites.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    leitor := bufio.NewReader(arquivo)
+    for {
+        linha, err := leitor.ReadString('\n')
+
+
+        if err == io.EOF {
+            break
+        }
+    }
+
+    arquivo.Close()
+    return sites
+}COPIAR CÓDIGO
+7- Por último vamos dar um trim em cada linha lida para remover caracteres especiais, como \n , espaços e tabs. E claro, após isto vamos adicionar a linha ao slice de sites:
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+
+    arquivo, err := os.Open("sites.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    leitor := bufio.NewReader(arquivo)
+    for {
+        linha, err := leitor.ReadString('\n')
+        linha = strings.TrimSpace(linha)
+
+        sites = append(sites, linha)
+
+        if err == io.EOF {
+            break
+        }
+
+    }
+
+    arquivo.Close()
+    return sites
+}COPIAR CÓDIGO
+8- Agora vamos chamar a nossa função récem criada dentro função iniciarMonitoramento, para que ao invés de obtermos os sites de um slice fixo, obteremos do arquivo sites.txt:
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := leSitesDoArquivo()
+
+    // restante da função
+}COPIAR CÓDIGO
+Faça o teste, adicione novos sites ao arquivos sites.txt e verifique se os sites estão sendos lidos e testados corretamente.
+
+https://s3.amazonaws.com/caelum-online-public/624-golang/05/projetos/alura-golang-stage-fim-cap05.zip
+
+@@09
+O que aprendemos?
+
+O que aprendemos?
+Detectar erros
+Trabalhar com arquivos
+Inclusive abrindo e fechando arquivos
+Ler um arquivo por completo com o pacote io/ioutil
+Ler linha a linha com o pacote bufio
+Criação de leitores
+Limpando strings com TrimSpace
