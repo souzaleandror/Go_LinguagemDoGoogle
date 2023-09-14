@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"time"
 	"bufio"
+	"strings"
+	"io"
 )
 
 const monitoramentos = 2
@@ -175,7 +177,7 @@ func exibeNomes() {
 	nomes := []string{"test1", "test2", "test3"}
 	nomes = append(nomes, "Aparecida")
 	fmt.Println(nomes)
-	fmt.Println(reflect.TypeOf(nome))
+	fmt.Println(reflect.TypeOf(nomes))
 	fmt.Println("O meu slice tem ", len(nomes), " posicoes")
 	fmt.Println("O meu slice tem ", cap(nomes), " capacidade")
 	
@@ -192,17 +194,17 @@ func leSiteDoArquivo() []string {
 	if err != nil {
 		fmt.Println("Ocorreu um erro: ", err)
 
-		return
+		return sites
 	}
 
 	if err2 != nil {
 		fmt.Println("Ocorreu um erro 2: ", err2)
 
-		return
+		return sites
 	}
 
 	fmt.Println(arquivo)
-	fmt.Println(string(arquivo2))
+	//fmt.Println(string(arquivo2))
 
 	leitor := bufio.NewReader(arquivo2)
 
@@ -216,7 +218,7 @@ func leSiteDoArquivo() []string {
 
 		if err3 != nil {
 			fmt.Println("Ocorreu um erro 3: ", err3)
-			return
+			return sites
 		}
 	
 		fmt.Println(linha)
