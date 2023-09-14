@@ -2218,3 +2218,703 @@ Identificador em branco, para ignorar um ou mais retornos de uma função
 Status de uma requisição
 Uma requisição de sucesso possui status code 200
 A instrução for, para deixar o nosso programa em loop eterno
+
+#### 14/09/2023
+
+@05-As principais coleções do Go
+
+@@01
+Arrays em Go
+
+Neste capítulo, vamos evoluir o monitoramento do nosso programa, monitorando mais de um site ao mesmo tempo. Como programadores, não vamos criar uma variável para cada site que desejamos monitorar, e sim uma estrutura de dados responsável por conter várias strings, vários sites, o já conhecido Array.
+Então, vamos ver como trabalhamos com coleções, principalmente Arrays e Slices, na linguagem Go.
+
+Declarando um array
+Primeiramente, vamos criar um array com a estrutura clássica, com o var. Para isso, além do var, nós devemos informar o nome do array, colchetes e o tipo de dados que ele guardará. Além disso, dentro dos colchetes, devemos informar o tamanho do array:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+    var sites [4]string
+    site := "https://www.alura.com.br"
+    resp, _ := http.Get(site)
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+    }
+}COPIAR CÓDIGO
+É importante nos atentar ao tipo de dados do array, não há espaço entre ele e os colchetes, na hora da declaração do array.
+
+Colocando um valor dentro do array
+Para colocar um valor no array, não há mistério, basta atribuir um valor a algum dos seus índices:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    var sites [4]string
+    sites[0] = "https://random-status-code.herokuapp.com/"
+    sites[1] = "https://www.alura.com.br"
+    sites[2] = "https://www.caelum.com.br"
+
+    site := "https://www.alura.com.br"
+    resp, _ := http.Get(site)
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+    }
+}COPIAR CÓDIGO
+Mas o fato do array ter um tamanho fixo, nos limita um pouco, pois se quisermos adicionar 5 itens no array, teremos que alterar o seu tamanho na sua declaração. Por isso, em Go, geralmente não trabalhamos com arrays, e sim com uma outra estrutura de dados, chamada Slice, que funciona em cima do array, mas não tem tamanho fixo.
+
+Veremos mais sobre isso no próximo vídeo.
+
+@@02
+Seu Valdomiro foi à feira
+PRÓXIMA ATIVIDADE
+
+Seu Valdomiro foi à feira e comprou 3 frutas. Sua bolsa tinha capacidade para guardar 4 frutas.
+var frutas [4] string
+frutas[0] = "Abacaxi"
+frutas[1] = "Laranja"
+frutas[2] = "Morango"COPIAR CÓDIGO
+O que vai acontecer se executarmos o código abaixo?
+
+fmt.Println(frutas[3])COPIAR CÓDIGO
+Alternativa correta
+Será impresso uma string vazia.
+ 
+Isso aí!
+Alternativa correta
+O programa não vai compilar porque a "variável" alocada para a última posição do array não foi usada.
+Alternativa correta
+Acontecerá um erro na execução.
+Quando os arrays são criados, eles assumem os valores padrão para os tipos de seus elementos. No caso, o tipo do array frutas é string e o valor padrão para cada posição do array será vazio. Portanto, o valor impresso será uma string vazia.
+
+@@03
+Para saber mais: funções que retornam arrays
+PRÓXIMA ATIVIDADE
+
+Considere o código abaixo.
+package main
+
+import (
+    "fmt"
+)
+
+func main() {
+    estados := devolveEstadosDoSudeste()
+    fmt.Println(estados)
+}
+
+func devolveEstadosDoSudeste() [4]string {
+    var estados [4]string
+    estados[0] = "RJ"
+    estados[1] = "SP"
+    estados[2] = "MG"
+    estados[3] = "ES"
+    return estados
+}COPIAR CÓDIGO
+O que será impresso no terminal?
+
+Alternativa correta
+Nada, porque o programa não compila, uma vez que não é possível retornar um array através de uma função.
+ 
+Alternativa correta
+Nada, porque o programa não compila, uma vez que a declaração de retorno da função não exige a quantidade de posições do array.
+ 
+Alternativa correta
+[RJ SP MG ES]
+ 
+Isso aí. O código acima cria uma função que retorna um array com quatro posições, que é atribuído a uma variável estado, e em seguida ela é impressa no terminal.
+
+@@04
+Slices em Go
+
+Para entendermos como funciona os Slices, essas abstrações do array em Go, vamos criar um, para aprendermos fazendo.
+A primeira grande vantagem dele, é que, como foi falado no vídeo anterior, seu tamanho não é fixo, é dinâmico, indeterminado. Então, como exemplo, vamos criar a função exibeNomes, para testar a utilização dessa estrutura de dados.
+
+Para criar um slice, podemos utilizar a declaração curta de variáveis. Sua declaração é bem parecida com a de um array:
+
+func exibeNomes() {
+    nomes := []string
+}COPIAR CÓDIGO
+Além disso, já na sua declaração, podemos preencher os seus dados, passando-os dentro de chaves, separados por vírgula:
+
+func exibeNomes() {
+    nomes := []string{"Douglas", "Daniel", "Bernardo"}
+}COPIAR CÓDIGO
+O slice infere o seu tamanho de acordo com a sua quantidade de elementos. Podemos verificar isso imprimindo a quantidade de itens contidos nele, através da função len:
+
+func exibeNomes() {
+    nomes := []string{"Douglas", "Daniel", "Bernardo"}
+    fmt.Println(len(nomes))
+}COPIAR CÓDIGO
+Ao chamar essa função, vemos que o slice possui 3 itens.
+
+Diferenças entre Array e Slice
+Além do tamanho, que no array é fixo, e no slice não, quais são as outras diferenças entre eles? Na verdade, o slice nada mais é do que um array, é uma abstração que funciona acima do array. Quando criamos um array, ele é criado na memória com as suas posições, e com o tipo especificado. Quando atribuímos valores aos seus índices, eles vão sendo preenchidos, e os índices que não utilizarmos vão continuar em branco, esperando serem preenchidos.
+
+Já no caso do slice, ele cria um array de acordo com os elementos que passamos para ele. Por exemplo, na função que criamos, um array de 3 índices foi criado, e cada índice foi preenchido com um nome.
+
+Mas podemos adicionar itens no slice, através da função append, que recebe o slice e o item a ser adicionado. Vamos adicionar o retorno dessa função no próprio slice e imprimir novamente a quantidade de itens contidos no slice:
+
+func exibeNomes() {
+    nomes := []string{"Douglas", "Daniel", "Bernardo"}
+    fmt.Println("O meu slice tem", len(nomes), "itens")
+
+    nomes = append(nomes, "Aparecida")
+    fmt.Println("O meu slice tem", len(nomes), "itens")
+}COPIAR CÓDIGO
+Mas a função len informa a quantidade de itens contidos nele, e não a sua capacidade. Para descobrir a sua capacidade, devemos utilizar a função cap:
+
+func exibeNomes() {
+    nomes := []string{"Douglas", "Daniel", "Bernardo"}
+    fmt.Println("O meu slice tem", len(nomes), "itens")
+    fmt.Println("O meu slice tem capacidade para", cap(nomes), "itens")
+
+    nomes = append(nomes, "Aparecida")
+    fmt.Println("O meu slice tem", len(nomes), "itens")
+    fmt.Println("O meu slice tem capacidade para", cap(nomes), "itens")
+}COPIAR CÓDIGO
+Ao executar a função, temos a seguinte saída:
+
+O meu slice tem 3 itens
+O meu slice tem capacidade para 3 itens
+O meu slice tem 4 itens
+O meu slice tem capacidade para 6 itensCOPIAR CÓDIGO
+Ou seja, o slice dobrou de tamanho quando adicionamos um novo item! Então, sempre que estourarmos a capacidade máxima do slice, do array abaixo dele, ele dobra de tamanho.
+
+Logo, o slice nada mais é do que o Go cuidando do array para nós, pois eles não funcionam de forma diferente. O slice é um array com algumas coisas abstraídas, evitando com que nos preocupemos com o tamanho e capacidade do array, focando somente em trabalhar com os dados.
+
+@@05
+Planning Poker
+PRÓXIMA ATIVIDADE
+
+Planning Poker é uma técnica de estimativa geralmente usada nas reuniões da metodologia Scrum. É chamada de poker porque utiliza um baralho com cartas numeradas.
+Reinaldo é um Scrum Master que deseja implementar a idéia no Go. Começou por montar um slice com os pontos do Scrum.
+
+pontosPlanningPoker := [] int {1, 2, 3, 5, 8, 13, 21}COPIAR CÓDIGO
+Como Reinaldo pode saber quantas cartas ele vai precisar para fazer a técnica? Dica: verifique o tamanho do slice.
+
+Alternativa correta
+size(pontosPlanningPoker)
+ 
+Alternativa correta
+count(pontosPlanningPoker)
+ 
+Alternativa correta
+len(pontosPlanningPoker)
+ 
+Isso aí! A função que usamos para descobrir o tamanho de uma slice é len().
+
+@06
+Mais cartas no baralho
+PRÓXIMA ATIVIDADE
+
+No exercício anterior, Reinaldo criou um slice que representava os pontos utilizados numa técnica de estimativa chamada Planning Poker.
+pontosPlanningPoker := [] int {1, 2, 3, 5, 8, 13, 21}COPIAR CÓDIGO
+Contudo, ele se esqueceu de colocar uma última pontuação, 40. Em vez de mudar o código de inicialização do slice, usou a função append.
+
+pontosPlanningPoker = append(pontosPlanningPoker, 40)COPIAR CÓDIGO
+O que será impresso no terminal quando ele executar o seguinte código:
+
+fmt.Println(cap(pontosPlanningPoker))COPIAR CÓDIGO
+Alternativa correta
+Não é possível determinar porque o slice usa um número randômico para aumentar sua capacidade.
+ 
+Alternativa correta
+Vai imprimir o número 8.
+ 
+Alternativa correta
+Vai imprimir 14.
+ 
+Isso aí! Quando é necessário colocar mais elementos do que sua capacidade atual, o slice dobra a capacidade.
+
+@@07
+A instrução for
+
+Vamos apagar a função exibeNomes, que foi útil para aprendermos o funcionamento do slice, e começar a utilizá-lo na nossa aplicação, para melhorar o armazenamento dos sites a serem monitorados:
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/", 
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+
+    site := "https://www.alura.com.br"
+    resp, _ := http.Get(site)
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+    }
+}COPIAR CÓDIGO
+Agora que temos uma coleção de sites, podemos monitorar mais de um site ao mesmo tempo. Para isso, devemos percorrer os elementos nosso slice, acessando e monitorando cada site.
+
+Percorrendo os itens do slice
+Como vimos na aula anterior, não existe no Go outra estrutura de repetição além do for, então vamos utilizá-lo para percorrer os itens do slice de sites. Para cada item do slice, nós vamos mandar uma requisição e testar o seu status code.
+
+Vimos o for infinito, que faz com o que o código seja repetido para sempre, mas também podemos utilizar o for "tradicional", onde declaramos uma variável e vamos incrementado-a até o tamanho de itens do slice, por exemplo:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/", 
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+
+    for i := 0; i < len(sites); i++ {
+        fmt.Println(sites[i])
+    }
+
+    site := "https://www.alura.com.br"
+    resp, _ := http.Get(site)
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+    }
+}COPIAR CÓDIGO
+Mas há uma forma mais enxuta de fazer isso em Go, utilizando o range. Ela é como se fosse um operador de iteração do Go, nos dando acesso a cada item do array, ou do slice, e ele nos retorna dos valores, a posição do item iterado e o próprio item daquela posição:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/", 
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+
+    for i, site := range sites {
+        fmt.Println("Estou passando na posição", i,
+            "do meu slice e essa posição tem o site", site)
+    }
+
+    site := "https://www.alura.com.br"
+    resp, _ := http.Get(site)
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+    }
+}COPIAR CÓDIGO
+Agora que conseguimos passar por cada item do slice, basta fazer com cada um deles o que já fazemos fora do for, ou seja, fazer uma requisição para o site e verificar o seu status code.
+
+Faremos isso no próximo vídeo.
+
+@@08
+Percorrendo o slice
+PRÓXIMA ATIVIDADE
+
+Considere o código abaixo
+package main
+
+import "fmt"
+
+func main() {
+    pontosPlanningPoker := []int{1, 2, 3, 5, 8, 13, 21, 40}
+    for i := 0; i < len(pontosPlanningPoker); i++ {
+        fmt.Println(pontosPlanningPoker[i])
+    }
+}COPIAR CÓDIGO
+Defina o conteúdo da próxima linha, de maneira que ela faça o programa compilar.
+
+package main
+
+import "fmt"
+
+func main() {
+    pontosPlanningPoker := []int{1, 2, 3, 5, 8, 13, 21, 40}
+    for ________________________________ {
+        fmt.Println("O ponto na posição", i, " tem o valor", ponto)
+    }
+}COPIAR CÓDIGO
+Alternativa correta
+i, ponto := range(pontosPlanningPoker)
+ 
+Isso aí!
+Alternativa correta
+(ponto in pontosPlanningPoker)
+ 
+Alternativa correta
+i, ponto : pontosPlanningPoker
+
+@@09
+Testando múltiplas vezes
+
+Queremos rodar o código que testa o site para cada um dos sites, então vamos exportá-lo ara uma função, a testaSite, que recebe o site por parâmetro:
+// restante do código omitido
+
+func testaSite(site string) {
+
+    resp, _ := http.Get(site)
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+    }
+}COPIAR CÓDIGO
+Agora chamamos essa função dentro do for, para cada item do nosso slice. Vamos aproveitar e diminuir a mensagem de teste e adicionar uma linha em branco, para dar um espaçamento entre as mensagens e o menu:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/", 
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+
+    for i, site := range sites {
+        fmt.Println("Testando site", i, ":", site)
+        testaSite(site)
+    }
+
+    fmt.Println("")
+}COPIAR CÓDIGO
+Ao executar o programa, todos os sites do slice são monitorados.
+
+Mas os sites são testados uma única vez e para testarmos novamente, devemos digitar o comando 1. Então, vamos fazer com que os sites sejam testados 5 vezes a cada monitoramento. Para isso, criamos mais um loop:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/",
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+
+    for i := 0; i < 5; i++ {
+        for i, site := range sites {
+            fmt.Println("Testando site", i, ":", site)
+            testaSite(site)
+        }        
+    }
+
+    fmt.Println("")
+}COPIAR CÓDIGO
+Aumentando o intervalo entre os monitoramentos
+Mas o for executa muito rápido, então testaríamos cinco vezes cada site com um intervalo mínimo entre cada teste. Seria interessante termos um intervalo maior entre os testes, por exemplo de 5 em 5 minutos.
+
+Para tal, a cada teste, podemos pedir para o Go esperar um pouco. Fazemos isso utilizando a função Sleep, do pacote time, passando para ela o quanto de tempo queremos esperar. Representamos o tempo através de constantes da própria biblioteca, como Second, Minute, entre outras:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/",
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+
+    for i := 0; i < 5; i++ {
+        for i, site := range sites {
+            fmt.Println("Testando site", i, ":", site)
+            testaSite(site)
+        }
+        time.Sleep(5 * time.Minute)
+    }
+    fmt.Println("")
+}COPIAR CÓDIGO
+No caso estamos testando de 5 em 5 minutos, mas esse tempo pode ser aumentado.
+
+Criando constantes
+Por último, vamos nos livrar de alguns números do nosso código, e exportá-los para constantes. Por que constantes? Pois elas não podem ser modificadas.
+
+Os números que queremos atacar é o número 5 que está dentro do for, que representa o número de monitoramentos, e o número 5 dentro do Sleep, que representa o delay do nosso monitoramento.
+
+Então, após os imports, criamos as constantes:
+
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "os"
+    "time"
+)
+
+const monitoramentos = 3
+const delay = 5
+
+// restante do código omitidoCOPIAR CÓDIGO
+Agora, na função iniciarMonitoramento, utilizamos essas constantes:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/",
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+
+    for i := 0; i < monitoramentos; i++ {
+        for i, site := range sites {
+            fmt.Println("Testando site", i, ":", site)
+            testaSite(site)
+        }
+
+        time.Sleep(delay * time.Second)
+    }
+
+    fmt.Println("")
+}COPIAR CÓDIGO
+Agora, se quisermos alterar o delay ou a quantidade de monitoramentos, basta alterarmos diretamente na declaração das constantes. E para finalizar, vamos adicionar mais alguns espaçamentos, a cada monitoramento dos nossos sites e depois que o comando foi escolhido:
+
+// restante do código omitido
+
+func leComando() int {
+    var comandoLido int
+    fmt.Scan(&comandoLido)
+    fmt.Println("O comando escolhido foi", comandoLido)
+    fmt.Println("")
+
+    return comandoLido
+}
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/",
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+
+    for i := 0; i < monitoramentos; i++ {
+        for i, site := range sites {
+            fmt.Println("Testando site", i, ":", site)
+            testaSite(site)
+        }
+        time.Sleep(delay * time.Second)
+        fmt.Println("")
+    }
+    fmt.Println("")
+}COPIAR CÓDIGO
+Com isso, conseguimos monitorar mais de uma vez múltiplos sites.
+
+@@10
+Cronômetro
+PRÓXIMA ATIVIDADE
+
+Fábio é um personal trainer e encomendou um programa para marcar o tempo de seus clientes.
+O desenvolvedor está tendo dificuldades para fazer o seguinte programa compilar. Você pode ajudá-lo?
+
+package main
+
+import "fmt"
+
+const aquecimento = 5
+const corridaLeve = 10
+const corridaForte = 10
+
+func main() {
+    fmt.Println("Período de alongamento...")
+    time.Sleep(alongamento * time.Minute)
+
+    fmt.Println("Período de aquecimento...")
+    time.Sleep(aquecimento * time.Minute)
+
+    fmt.Println("Período de corrida leve...")
+    time.Sleep(corridaLeve * time.Minute)
+
+    fmt.Println("Período de corrida forte...")
+    time.Sleep(corridaForte * time.Minute)
+
+    fmt.Println("Período de alongamento...")
+    time.Sleep(alongamento * time.Minute)
+}COPIAR CÓDIGO
+Alternativa correta
+Falta incluir a constante alongamento:
+const alongamento = 1
+ 
+Alternativa correta
+Falta importar o pacote time...
+import "time"
+...e incluir a constante alongamento:
+const alongamento = 1
+ 
+Isso aí!
+Alternativa correta
+Falta importar o pacote time...
+import "time"
+
+@@11
+Mãos na Massa: Testando múltiplos sites
+PRÓXIMA ATIVIDADE
+
+Começando deste ponto? Você pode fazer o DOWNLOAD completo do projeto do capítulo anterior e continuar seus estudos a partir deste capítulo.
+Neste exercício vamos melhorar o monitoramento de nosso programa, para que ele monitore mais de um site ao mesmo tempo.
+
+1- Nosso primeiro passo é substituir a nossa string site pelo slice sites, que conterá os endereços dos vários sites a serem testados. Vamos testar pelo menos 3 sites, o da Alura (https://www.alura.com.br) , o da Caelum (https://www.caelum.com.br) e o último do Random Status Code (https://random-status-code.herokuapp.com), para ter um falhe de vez em quando. Crie o slice com estes 3 sites:
+
+//hello.go
+
+//restante do arquivo
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/", 
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+    //restante da função
+}COPIAR CÓDIGO
+2- Como queremos que cada um destes sites seja testado uma vez, vamos um for para percorrer o slice inteiro, utilize o range para facilitar:
+
+//hello.go
+
+//restante do arquivo
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/", 
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+
+    for i, site := range sites {
+        // restante 
+    }
+}COPIAR CÓDIGO
+3- Vamos agora extrair o nosso código que testa um site para uma função externa, para facilitar na hora que estamos iterando sobre o slice, aonde cada site deve executar uma vez a função. Crie a função testaSite que deve receber uma string com o site a ser testado e mova o código go http.Get para lá:
+
+//hello.go 
+//restante do arquivo
+
+func testaSite(site string) {
+
+    resp, _ := http.Get(site)
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+    }
+}COPIAR CÓDIGO
+4- Vamos agora chamar a testa site dentro do nosso for que está varrendo o slice:
+
+// restante do código omitido
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/", 
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+
+    for i, site := range sites {
+        fmt.Println("Testando site", i, ":", site)
+        testaSite(site)
+    }
+
+    fmt.Println("")
+}COPIAR CÓDIGO
+_ Adicione o fmt.Println("") vazio ao final, e o que está dentro do for também, para que o nosso script vá exibindo mensagens para o nosso usuário enquanto ele é executado._
+
+Execute o nosso script e veja que agora conseguimos testar diversos sites, e ao final do teste o nosso Menu surge para escolhermos a opção de monitorar novamente.
+
+https://s3.amazonaws.com/caelum-online-public/624-golang/04/projetos/alura-golang-stage-fim-cap04.zip
+
+https://www.alura.com.br/?_gl%253D1%252A106udxe%252A_ga%252AMTUyNTg3MjAxMy4xNjk0Njc1MDk2%252A_ga_1EPWSW3PCS%252AMTY5NDY5MzY1MC4zLjEuMTY5NDY5NDI2Ny4wLjAuMA..%252A_fplc%252AUEhJQ3lwQ0Zpd0RqSjJOZDBXNDNmUkswTWY1UzdTbnhkNGFNeWpZUzduSE9jSTl4WG5jJTJGOTZtRyUyRnNBVkVuNzVjNE5HaEJSODRib1JRJTJGcGthSWtTVCUyRiUyRkZ1WWxiJTJGaldIYXFWdmdDY0dBRjBZSG5tVk5VSDJTNzNMM1Y0SHBnJTNEJTNE
+
+https://www.caelum.com.br/
+
+https://random-status-code.herokuapp.com/
+
+@@12
+Mãos na Massa: Delay e Aumentando o número de testes
+PRÓXIMA ATIVIDADE
+
+Agora vamos fazer com que a cada vez que o usuário selecione a opção de monitoramento, cada site seja testado mais de uma vez, de acordo com o que o usuário setar nas constantes.
+1- Primeiro crie a constante monitoramentos que indicará quantas vezes o site será testado. Coloque o número que desejar, mas lembre-se que quanto mais você testar, mais o script vai demorar:
+
+//hello.go
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "os"    
+)
+
+const monitoramentos = 3
+
+// restante do arquivoCOPIAR CÓDIGO
+2- Agora vamos colocar um for dentro da função iniciarMonitoramentos para que o slice seja percorrido o número de vezes que configuramos na constante:
+
+//hello.go
+
+//restante do arquivo
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/",
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+
+    //Adição aqui
+    for i := 0; i < monitoramentos; i++ {
+        for i, site := range sites {
+            fmt.Println("Testando site", i, ":", site)
+            testaSite(site)
+        }
+    }
+
+    fmt.Println("")
+}COPIAR CÓDIGO
+3- Para que haja uma pausa entre cada um dos testes que faremos, vamos adicionar um pequeno delay entre cada iteração de monitoramento. Utilize a função Sleep do pacote time para dar uma pausa entre monitoramentos. Para que o tamanho desta pausa fique configurável, vamos criar uma constante que vai dizer o tamanho do delay:
+
+//hello.go
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "os"    
+)
+
+const monitoramentos = 3
+const delay = 5
+
+// restante do arquivoCOPIAR CÓDIGO
+4- E a partir do valor da constante, vamos adicionar um time.Sleep na função iniciarMonitoramento. Vamos multiplicar a nossa contante (delay) pela constante que representa o número de segundos no Go(time.Seconds):
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := []string{"https://random-status-code.herokuapp.com/",
+        "https://www.alura.com.br", "https://www.caelum.com.br"}
+
+    for i := 0; i < monitoramentos; i++ {
+        for i, site := range sites {
+            fmt.Println("Testando site", i, ":", site)
+            testaSite(site)
+        }
+
+        // adição AQUI!
+        time.Sleep(delay * time.Second)
+        fmt.Println("")
+    }
+    fmt.Println("")
+}COPIAR CÓDIGO
+_ Adicione o outro fmt.Println("") para que a exibição fique mais organizada para o seu usuário_
+
+Agora o seu script deve estar testando os seus sites de acordo com o número de vezes que você setou na constante monitoramentos, e entre cada testada ele deve dar uma pausa de acordo com o número de segundos que você configurou na constante delay.
+
+@@13
+O que aprendemos?
+
+O que aprendemos?
+Coleções: Arrays e Slices
+Trabalhar com Arrays e Slices
+Diferenças entre Arrays e Slices
+A estrutura de repetição for
+Operador de iteração range
+O range nos dá acesso a cada item da coleção, nos retornando a posição do item iterado e o próprio item daquela posição
+Constantes
+Trabalhando com o pacote time
