@@ -44,10 +44,10 @@ Então, basta fazer o download e instalar a última versão da linguagem para o 
 Para saber mais, disponibilizamos este exercício com mais detalhes da instalação para cada sistema operacional.
 Ao término da instalação, o Go será habilitado para ser utilizado na linha de comando. Para verificar a sua instalação, executamos no terminal/linha de comando:
 
-go versionCOPIAR CÓDIGO
+go version
 Executando o comando acima, teremos uma saída parecida com esta:
 
-go version go1.8.1 linux/amd64COPIAR CÓDIGO
+go version go1.8.1 linux/amd64
 Mas além da instalação do Go, devemos seguir outros padrões para trabalhar com essa linguagem.
 
 Go Workspace
@@ -61,7 +61,7 @@ pasta-do-usuario/
 └── go
     ├── bin
     ├── pkg
-    └── srcCOPIAR CÓDIGO
+    └── src
 Mas se quisermos que o Go Workspace seja em outro lugar, pode? Pode ser, mas por padrão o instalador do Go já espera que essa pasta esteja na raiz do usuário, então, para nos facilitar, vamos seguir os padrões da linguagem.
 
 Editor de texto
@@ -106,20 +106,20 @@ Ao final da instalação , abra um novo prompt de comando e execute o comando go
 Instalando para o Ubuntu
 Faça o download do arquivo .tar do Go e navegue com o terminal até a pasta aonde o arquivo foi baixado. Use o comando abaixo para extraí-lo em sua pasta /usr/local:
 
-sudo tar -C /usr/local -xzf go1.8.3.linux-amd64.tar.gzCOPIAR CÓDIGO
+sudo tar -C /usr/local -xzf go1.8.3.linux-amd64.tar.gz
 Repare que neste exemplo estamos utilizando a versão 1.8.3 da linguagem, caso você faça o Download de uma versão mais nova você deve alterar o comando para que o nome do arquivo corresponda ao que foi baixado.
 
 Em seguida precisamos adicionar o caminho /usr/local/go/bin no PATH do sistema. Você pode fazer isto adicionando uma linha extra no arquivo /etc/profile, por exemplo com o editor de textos gedit. Abra o arquivo /etc/profile com o gedit utilizando o comando abaixo:
 
-sudo gedit /etc/profileCOPIAR CÓDIGO
+sudo gedit /etc/profile
 E em seguida adicione a seguinte linha no final do arquivo:
 
-export PATH=$PATH:/usr/local/go/binCOPIAR CÓDIGO
+export PATH=$PATH:/usr/local/go/bin
 Salve a alteração e feche o editor.
 
 Agora utilize o comando:
 
-source /etc/profileCOPIAR CÓDIGO
+source /etc/profile
 E o Go já deve estar funcionando com sucesso! Faça o teste em seu terminal com o comando go version e veja se a versão e os comandos do Go foram exibidos corretamente.
 
 https://golang.org/dl/
@@ -138,7 +138,7 @@ pasta-do-usuario/
 └── go
     ├── bin
     ├── pkg
-    └── srcCOPIAR CÓDIGO
+    └── src
 A bin , onde ficará os compilados do nosso código Go.
 
 A pkg, onde ficará os pacotes compartilhados das nossas aplicações, pois o Go é uma linguagem bastante modular, dependendo bastante de pacotes que vamos importando ao longo de nossos códigos.
@@ -172,14 +172,14 @@ https://cursos.alura.com.br/course/git-github-controle-de-versao/task/57007
 Criando o Hello World
 
 Para construirmos o nosso primeiro programa em Go, primeiramente devemos entender algumas instruções iniciais dele. Se queremos que o nosso programa seja um executável, ou seja, se queremos que depois o programa seja executado no nosso computador, devemos declarar o programa assim:
-package mainCOPIAR CÓDIGO
+package main
 Essa linha informa que o nosso programa será o principal pacote da nossa aplicação, e que o nosso código deve começar por ele. Além disso, todo programa principal tem a função principal. As funções em Go são declaradas com func, seguida do seu nome e os argumentos entre parênteses, com o bloco de código ficando entre chaves:
 
 package main
 
 func main() {
 
-}COPIAR CÓDIGO
+}
 Uma das características da função principal é não retornar nada e nem receber argumento nenhum. Quando executamos o programa, essa função é iniciada, e quando ela é finalizada, o programa termina.
 
 Mas como imprimimos a mensagem de Hello World?
@@ -193,7 +193,7 @@ import "fmt"
 
 func main() {
 
-}COPIAR CÓDIGO
+}
 Com o pacote importado, podemos utilizar a função:
 
 package main
@@ -202,7 +202,7 @@ import "fmt"
 
 func main() {
     fmt.Println()
-}COPIAR CÓDIGO
+}
 O fato da função Println estar com a primeira letra maiúscula pode causar uma estranheza para quem vem de uma outra linguagem de programação. Quando estamos trabalhando com Go, a função que vem de um pacote externo, ou seja, uma função que não está declarada no nosso arquivo, é utilizada com a primeira letra maiúscula. Nós chamamos o pacote externo (no nosso caso, o fmt), e a função com a primeira letra maiúscula (no nosso caso, Println). Isso é uma convenção da linguagem, que faz com que saibamos que a função veio de um pacote externo
 
 Agora, falta somente passarmos a mensagem que queremos exibir como argumento para a função Println:
@@ -213,7 +213,7 @@ import "fmt"
 
 func main() {
     fmt.Println("Olá Mundo")
-}COPIAR CÓDIGO
+}
 Resta agora executar esse programa.
 
 Executando um programa em Go
@@ -221,19 +221,19 @@ Como Go é uma linguagem compilada, para executar um programa seu, devemos compi
 
 Nele, nós entramos dentro da pasta go/src/hello e executamos o comando go build seguido do nome do programa que queremos executar:
 
-go build hello.goCOPIAR CÓDIGO
+go build hello.go
 Caso não dê nenhum erro, ao verificar o conteúdo da pasta, temos o seguinte:
 
 alura@alura-01:~/go/src/hello$ ls
-hello  hello.goCOPIAR CÓDIGO
+hello  hello.go
 Ou seja, o executável foi criado. Agora basta executá-lo:
 
 alura@alura-01:~/go/src/hello$ ./hello 
-Olá MundoCOPIAR CÓDIGO
+Olá Mundo
 Toda vez que alterarmos o nosso código, devemos compilá-lo para depois executá-lo, mas o Go é uma linguagem que facilita muita coisa para nós, e isso inclui o processo de compilação. Em vez de executar o go build, para depois rodar o executável gerado, podemos executar o comando go run seguido do nome do programa que queremos executar:
 
 alura@alura-01:~/go/src/hello$ go run hello.go 
-Olá Mundo, alunos!!!COPIAR CÓDIGO
+Olá Mundo, alunos!!!
 O comando go run compila e executa o programa de uma vez só! Isso evita com que tenhamos sempre que executar dois comandos para executar um simples programa.
 
 Terminal embutido do Visual Studio Code
@@ -276,7 +276,7 @@ import "fmt"
 func main() 
 {
     fmt.Println("Olá Mundo")
-}COPIAR CÓDIGO
+}
 O próprio editor já acusará erro de sintaxe. Ao tentar executar o programa, o mesmo erro será apontado no terminal.
 
 O Go tem convenções que fazem com que o desenvolvedor não fique perdendo tempo discutindo, por exemplo se a chave precisa ser do lado ou embaixo. Go é uma linguagem para simplificar, então ele já diz que a convenção dele é a chave ser do lado da função, e se não fizer isso, ocasionará um erro.
@@ -291,7 +291,7 @@ Principal
 Observe a listagem abaixo. Marque as alternativas que representam as correções que precisam ser feitas para que o código compile e seja executado como um programa.
 function main() {
   fmt.Println("Hello, Gopher!");
-}COPIAR CÓDIGO
+}
 Alternativa incorreta
 Importar o pacote que possui a função para imprimir uma linha no terminal `import "fmt".
  
@@ -323,7 +323,7 @@ import "fmt"
 
 func principal() {
   fmt.Println("Hello, world!")
-}COPIAR CÓDIGO
+}
 Infelizmente o programa não está compilando. O que precisa ser feito para que o código passe a compilar?
 
 Alternativa correta
@@ -348,7 +348,7 @@ pasta-do-usuario/
     ├── bin
     ├── pkg
     └── src
-        └── helloCOPIAR CÓDIGO
+        └── hello
 Todos os projetos que você for desenvolver na linguagem Go ficarão em suas próprias pastas no diretório src.
 
 Agora vamos criar o primeiro arquivo , o hello.go dentro pasta /hello:
@@ -359,13 +359,13 @@ pasta-do-usuario/
     ├── pkg
     └── src
         └── hello
-           └── hello.goCOPIAR CÓDIGO
+           └── hello.go
 E neste arquivo vamos criar o nosso primeiro programa.
 
 Como todo projeto em Go, precisamos definir qual será o pacote inicial com a instrução:
 
 //hello.go
-package mainCOPIAR CÓDIGO
+package main
 E também precisamos definir a função principal do programa,a nossa função main:
 
 //hello.go
@@ -373,7 +373,7 @@ package main
 
 func main(){
 
-}COPIAR CÓDIGO
+}
 Como desejamos exibir uma mensagem, precisamos importar o pacote fmt, que contêm as funções de formatação da linguagem inclusive a função que imprime uma mensagem, a função fmt.Println():
 
 //hello.go
@@ -383,7 +383,7 @@ import "fmt"
 
 func main(){
 
-}COPIAR CÓDIGO
+}
 Para não dar azar e começar nossa jornada no mundo do Go com o pé direito, vamos começar com o Hello World clássico de todas as linguagens:
 
 //hello.go
@@ -393,12 +393,12 @@ import "fmt"
 
 func main(){
     fmt.Println("Hello World com Go!")
-}COPIAR CÓDIGO
+}
 Para executar nosso código, basta utilizarmos o comando go run hello.go no terminal dentro da pasta que contêm nosso arquivo com o código fonte do programa que o executável será automaticamente criado e executado :
 
 // Terminal
 go run hello.go
-Hello World com Go!COPIAR CÓDIGO
+Hello World com Go!
 Nosso primeiro programa está completo!
 
 @@13
@@ -462,7 +462,7 @@ import "fmt"
 func main() {
     var nome string = "Douglas"
     fmt.Println("Olá sr.")
-}COPIAR CÓDIGO
+}
 Agora, para concatenar a frase com a variável, passamos a mesma para a função Println, separando os elementos por vírgula:
 
 package main
@@ -472,7 +472,7 @@ import "fmt"
 func main() {
     var nome string = "Douglas"
     fmt.Println("Olá sr.", nome)
-}COPIAR CÓDIGO
+}
 Falta agora exibirmos a versão do sistema, que será no modelo 1.0, 1.1, etc. Logo, a versão é um número flutuante, que no Go tem duas versões, o float32 para 32 bits, e float64 para 64 bits. Como o nosso número será pequeno, utilizaremos a versão de 32 bits:
 
 package main
@@ -484,7 +484,7 @@ func main() {
     var versao float32 = 1.1
     fmt.Println("Olá sr.", nome)
     fmt.Println("Este programa está na versão", versao)
-}COPIAR CÓDIGO
+}
 Variável sem valor atribuído
 Do mesmo jeito, podemos exibir a idade, que é um número inteiro, logo um int:
 
@@ -498,12 +498,12 @@ func main() {
     var versao float32 = 1.1
     fmt.Println("Olá sr.", nome, "sua idade é", idade)
     fmt.Println("Este programa está na versão", versao)
-}COPIAR CÓDIGO
+}
 A variável idade está vazia propositalmente, e ao executar o programa, temos a seguinte saída:
 
 alura@alura-01:~/go/src/hello$ go run hello.go
 Olá sr. Douglas sua idade é 0
-Este programa está na versão 1.1COPIAR CÓDIGO
+Este programa está na versão 1.1
 No Go, quando não atribuímos um valor a uma variável, ela assume um valor zerado, ou seja, se for um inteiro, seu valor será 0, se for um número flutuante, seu valor será 0.0, e se for uma string, seu valor será uma string vazia.
 
 Não utilização de uma variável
@@ -519,12 +519,12 @@ func main() {
     var versao float32 = 1.1
     fmt.Println("Olá sr.", nome)
     fmt.Println("Este programa está na versão", versao)
-}COPIAR CÓDIGO
+}
 Temos a seguinte saída:
 
 alura@alura-01:~/go/src/hello$ go run hello.go
 # command-line-arguments
-./hello.go:7: idade declared and not usedCOPIAR CÓDIGO
+./hello.go:7: idade declared and not used
 Essa é mais uma convenção do Go, temos sempre que utilizar as variáveis que declaramos. Até por que, se não estamos utilizando a variável, não tem motivo dela estar ali.
 
 @@02
@@ -543,11 +543,11 @@ func main() {
     fmt.Println("O preço do leite é R$", precoLeite)
     fmt.Println("O preço do ovo é R$", precoOvo)
     fmt.Println("O preço do pão é R$", precoPao)
-}COPIAR CÓDIGO
+}
 Mas ao executar o programa, ele recebe o seguinte erro:
 
 # command-line-arguments
-./hello.go:6: undefined: floatCOPIAR CÓDIGO
+./hello.go:6: undefined: float
 O que aconteceu no programa do George para gerar esse erro?
 
 Alternativa correta
@@ -577,7 +577,7 @@ func main() {
     var versao float32 = 1.1
     fmt.Println("Olá sr.", nome, "sua idade é", idade)
     fmt.Println("Este programa está na versão", versao)
-}COPIAR CÓDIGO
+}
 No Visual Studio Code, podemos perceber que as variáveis nome e idade estão com um sublinhado verde:
 
 Variáveis com sublinhado verde
@@ -597,7 +597,7 @@ func main() {
     var versao float32 = 1.1
     fmt.Println("Olá sr.", nome, "sua idade é", idade)
     fmt.Println("Este programa está na versão", versao)
-}COPIAR CÓDIGO
+}
 Ao executar o programa, ele continua funcionando da mesma forma. Mas por que o Visual Studio não faz a mesma sugestão para a variável versao?
 
 Ele não faz a mesma sugestão pois há dois tipos flutuantes, o float32 e o float64, logo o Go pode inferir qualquer um dos dois tipos à nossa variável, mas nada impede que façamos isso:
@@ -612,7 +612,7 @@ func main() {
     var versao = 1.1
     fmt.Println("Olá sr.", nome, "sua idade é", idade)
     fmt.Println("Este programa está na versão", versao)
-}COPIAR CÓDIGO
+}
 Para saber se o Go conseguir inferir corretamente o tipo das variáveis, podemos descobri-los, importando o pacote reflect e chamando a sua função TypeOf, passando para ela a variável que queremos saber o tipo:
 
 package main
@@ -628,13 +628,13 @@ func main() {
     fmt.Println("Este programa está na versão", versao)
 
     fmt.Println("O tipo da variável idade é", reflect.TypeOf(versao))
-}COPIAR CÓDIGO
+}
 E temos a seguinte saída:
 
 alura@alura-01:~/go/src/hello$ go run hello.go
 Olá sr. Douglas sua idade é 24
 Este programa está na versão 1.1
-O tipo da variável idade é float64COPIAR CÓDIGO
+O tipo da variável idade é float64
 Assim vemos que, por padrão, o Go infere o maior tipo flutuante para a variável, o float64. Então, a menos que queiramos especificar que queremos o tipo float32, podemos omitir a declaração do tipo, que quando o Go ver um número decimal, ele será capaz de inferir o seu tipo.
 
 Declaração curta de variáveis
@@ -650,7 +650,7 @@ func main() {
     versao := 1.1
     fmt.Println("Olá sr.", nome, "sua idade é", idade)
     fmt.Println("Este programa está na versão", versao)
-}COPIAR CÓDIGO
+}
 Quando vermos o operador :=, significa que está sendo declarada uma variável, atribuindo o seu valor e inferindo o seu tipo. Além disso, esse operador possui outras vantagens, que veremos ao longo do treinamento.
 
 @@04
@@ -684,7 +684,7 @@ func main() {
     var nome string = "José"
     var peso float32 = 75.4
     fmt.Println("Olá, eu sou o", nome)
-}COPIAR CÓDIGO
+}
 Esse programa gera um erro. Você sabe identificar a causa?
 
 Alternativa correta
@@ -717,7 +717,7 @@ func main() {
     fmt.Println("1- Iniciar Monitoramento")
     fmt.Println("2- Exibir Logs")
     fmt.Println("0- Sair do Programa")
-}COPIAR CÓDIGO
+}
 Capturando a entrada do usuário
 Para capturar o que o usuário escrever, existe a função Scanf, também do pacote fmt. Ela recebe dois argumentos, um modificador (o que queremos receber como entrada, um inteiro, string, etc) e um ponteiro para a variável que guardará a entrada do usuário.
 
@@ -739,7 +739,7 @@ func main() {
     fmt.Println("0- Sair do Programa")
 
     var comando int
-}COPIAR CÓDIGO
+}
 E agora nós passamos para a função Scanf o valor "%d", que significa que esperamos receber um número inteiro, e a variável comando:
 
 package main
@@ -759,7 +759,7 @@ func main() {
 
     var comando int
     fmt.Scanf("%d", &comando)
-}COPIAR CÓDIGO
+}
 Daqui a pouco falaremos sobre o &, que se encontra à frente da variável comando. Ou seja, a função salvará na variável o que o usuário digitar. E para verificar se a entrada está mesmo sendo salva na variável comando, vamos imprimi-la:
 
 package main
@@ -781,7 +781,7 @@ func main() {
     fmt.Scanf("%d", &comando)
 
     fmt.Println("O comando escolhido foi", comando)    
-}COPIAR CÓDIGO
+}
 Ao executar o programa, ele fica travado esperando que digitemos algo. Ao digitar, temos a seguinte saída:
 
 alura@alura-01:~/go/src/hello$ go run hello.go
@@ -791,7 +791,7 @@ Este programa está na versão 1.1
 2- Exibir Logs
 0- Sair do Programa
 2
-O comando escolhido foi 2COPIAR CÓDIGO
+O comando escolhido foi 2
 Entendendo o ponteiro
 Sobre o & visto antes, ele significa o endereço da variável que queremos salvar a entrada, pois a função Scanf não espera uma variável, e sim o seu endereço, um ponteiro para a variável.
 
@@ -823,7 +823,7 @@ func main() {
     fmt.Scan(&comando)
 
     fmt.Println("O comando escolhido foi", comando)    
-}COPIAR CÓDIGO
+}
 Ou seja, estamos esperando um dado, e quando o recebermos, colocamos dentro de uma variável inteira. Como a variável é inteira, a função sabe que deve esperar, receber valores inteiros.
 
 Ao executar o programa, caso digitemos um valor não-inteiro, como uma letra, por exemplo, não será guardado nenhum valor no endereço da variável comando, logo ela continuará com o valor padrão atribuído a ela no momento da sua inicialização, que é 0. Ou seja, o ideal seria que detectássemos quando um valor não-inteiro fosse digitado.
@@ -835,7 +835,7 @@ Leitura da entrada do usuário
 
 No último vídeo, para capturar o que o usuário escrever, foi visto que existe a função Scanf, do pacote fmt. Ela recebe como argumento um modificador e um ponteiro para a variável que guardará a entrada do usuário, por exemplo:
 var idade int
-fmt.Scanf("%d", &idade)COPIAR CÓDIGO
+fmt.Scanf("%d", &idade)
 A variável idade é do tipo inteiro, logo, só pode receber números inteiros. Então, como o Go sabe que a variável só pode receber números inteiros, o modificador %d, que representa um número inteiro, deixa de ser necessário. Por isso há uma outra função, que não recebe como argumento o modificador.
 
 Essa função é a:
@@ -873,7 +873,7 @@ import "fmt"
 func main() {
     nome := "Douglas"
     versao := 1.1
-}COPIAR CÓDIGO
+}
 2 - Vamos exibir as mensagens de boas vindas com estas duas variáveis:
 
 //hello.go
@@ -887,7 +887,7 @@ func main() {
 
     fmt.Println("Olá, sr(a).", nome)
     fmt.Println("Este programa está na versão", versao)
-}COPIAR CÓDIGO
+}
 3 - Agora vamos exibir o Menu para o usuário escolher qual opção ele deseja. Serão 3 Println para exibir o Menu, um para cada opção:
 
 //hello.go
@@ -905,7 +905,7 @@ func main() {
     fmt.Println("1- Iniciar Monitoramento")
     fmt.Println("2- Exibir Logs")
     fmt.Println("0- Sair do Programa")
-}COPIAR CÓDIGO
+}
 4- Com o menu sendo exibido corretamente, precisamos capturar a escolha do usuário do nosso programa. Vamos colocar a opção escolhida na variável int comando e capturar o seu valor com a função fmt.Scan():
 
 //hello.go
@@ -926,7 +926,7 @@ func main() {
 
     var comando int
     fmt.Scan(&comando)
-}COPIAR CÓDIGO
+}
 Atenção para não esquecer de passar o endereço (&) da variável comando para a função Scan
 
 5- Por último imprima o valor da variável comando para garantir que estamos capturando com sucesso:
@@ -951,7 +951,7 @@ func main() {
     fmt.Scan(&comando)
 
     fmt.Println("O valor da variável comando é:", comando)
-}COPIAR CÓDIGO
+}
 Conseguimos criar nossa mensagem de introdução e o menu de opções do usuário, além de exibir qual opção ele escolheu. Já estamos avançando em nosso programa !
 
 https://s3.amazonaws.com/caelum-online-public/624-golang/01/projetos/alura-golang-stage-fim-cap01.zip
@@ -1001,7 +1001,7 @@ A condição do if, no Go, não fica entre parênteses, como já é prática de 
 
 if comando == 1 {
 
-}COPIAR CÓDIGO
+}
 E a condição deve sempre retornar um booleano, ou seja, true ou false. Como queremos testar os 3 comandos, vamos colocá-lo no if:
 
 package main
@@ -1029,7 +1029,7 @@ func main() {
     } else if comando == 0 {
 
     }
-}COPIAR CÓDIGO
+}
 E por último, se não for nenhum comando conhecido, vamos imprimir uma mensagem, demonstrando que não conhecemos o comando digitado. Vamos aproveitar e colocar as mensagens dos outros comandos:
 
 package main
@@ -1059,7 +1059,7 @@ func main() {
     } else {
         fmt.Println("Não conheço este comando")
     }
-}COPIAR CÓDIGO
+}
 Com isso, concluímos os ifs, que não possui muito mistério, as diferenças para as outras linguagens é o não uso de parênteses na condição, que deve sempre retornar um booleano.
 
 @@02
@@ -1068,7 +1068,7 @@ Discutindo maioridade...
 Para qual das alternativas abaixo o Go vai permitir compilarmos o if abaixo?
 if maiorDeIdade {
 
-}COPIAR CÓDIGO
+}
 Alternativa correta
 maiorDeIdade := true
  
@@ -1099,7 +1099,7 @@ case 2:
     fmt.Println("Exibindo Logs...")
 case 0:
     fmt.Println("Saindo do programa...")
-}COPIAR CÓDIGO
+}
 Mas se o valor da variável não estiver em nenhum dos casos listados? Para isso, existe o caso default, que é o que será executado se os nossos casos não forem atendidos:
 
 package main
@@ -1130,7 +1130,7 @@ func main() {
     default:
         fmt.Println("Não conheço este comando")
     }
-}COPIAR CÓDIGO
+}
 Ao executar o programa, ele funciona como antes, mas desta vez com uma nova instrução de controle de fluxo.
 
 Uso do break
@@ -1176,7 +1176,7 @@ func main() {
     default:
         fmt.Println("Não entendi seu paladar...")
     }
-}COPIAR CÓDIGO
+}
 Quando o cliente digitar b, o que será impresso?
 
 Alternativa correta
@@ -1220,7 +1220,7 @@ case 0:
 default:
     fmt.Println("Não conheço esse comando")
     break
-}COPIAR CÓDIGO
+}
 Porém, ele não é obrigatório. Apenas uma alternativa é executada por avaliação switch.
 
 @@06
@@ -1266,7 +1266,7 @@ func exibeIntroducao() {
     versao := 1.1
     fmt.Println("Olá, sr.", nome)
     fmt.Println("Este programa está na versão", versao)
-}COPIAR CÓDIGO
+}
 É comum em Go, utilizarmos o padrão camelCase para nome das funções, ou seja, a primeira letra minúscula e a cada nova palavra, sua primeira letra será maiúscula, sem espaço entre elas.
 
 Retornando um valor em uma função
@@ -1274,7 +1274,7 @@ Agora, vamos criar a função leComando, para ler o comando digitado pelo usuár
 
 func leComando() int {
 
-}COPIAR CÓDIGO
+}
 E para retornar um valor, utilizarmos o return:
 
 func leComando() int {
@@ -1283,7 +1283,7 @@ func leComando() int {
     fmt.Println("O comando escolhido foi", comandoLido)
 
     return comandoLido
-}COPIAR CÓDIGO
+}
 Agora, na função main, nós chamamos essa função, já atribuindo-a à variável comando, utilizando o operador de declaração de variável curta:
 
 package main
@@ -1325,7 +1325,7 @@ func leComando() int {
     fmt.Println("O comando escolhido foi", comandoLido)
 
     return comandoLido
-}COPIAR CÓDIGO
+}
 O Go verá que a variável comando será o retorno da função leComando, que é um inteiro, logo a variável também será um inteiro.
 
 Função para exibir o menu
@@ -1372,7 +1372,7 @@ func leComando() int {
     fmt.Println("O comando escolhido foi", comandoLido)
 
     return comandoLido
-}COPIAR CÓDIGO
+}
 Agora que já temos uma noção de como construir funções básicas, vamos nos aprofundar nisso ao longo do treinamento, mas já podemos começar pela função que sai do programa.
 
 Saindo do programa
@@ -1402,7 +1402,7 @@ func main() {
     default:
         fmt.Println("Não conheço este comando")
     }
-}COPIAR CÓDIGO
+}
 Do mesmo jeito, há uma forma de informar o sistema operacional que ocorreu algum problema na execução do programa, como por exemplo quando o usuário digita um comando desconhecido. Para isso, passamos o valor -1 para a função Exit. Então a função main ficará assim:
 
 package main
@@ -1428,7 +1428,7 @@ func main() {
         fmt.Println("Não conheço este comando")
         os.Exit(-1)
     }
-}COPIAR CÓDIGO
+}
 Quando o usuário digitar um comando desconhecido, ao invés de encerrar o programa, podemos pedir para o usuário digitar um novo comando. Veremos isso mais à frente.
 
 @@07
@@ -1449,7 +1449,7 @@ func lePalavra() string {
     fmt.Print("Digite uma palavra: ")
     fmt.Scan(&palavra)
     return palavra
-}COPIAR CÓDIGO
+}
 O que está faltando para que ele compile e a função retorne a palavra digitada para a função principal?
 
 Alternativa correta
@@ -1488,7 +1488,7 @@ os.Exit(-1)
 Precisamos usar a função Exit que está disponível no pacote os.
 Para isso é necessário importar o pacote os
 
-import "os"COPIAR CÓDIGO
+import "os"
 E no local devido chamar a função Exit com código 0, que representa uma saída bem sucedida.
 
 os.Exit(0)
@@ -1524,7 +1524,7 @@ func main() {
     default:
         fmt.Println("Não conheço este comando")
     }
-}COPIAR CÓDIGO
+}
 _ Aqui colocamos uma opção no switch para cada item do menu que tinhamos no menu anteriormente_
 
 2- Agora vamos começar a organizar nosso código em pequenas funções, cada uma com sua responsabilidade. A primeira a ser criada será a função que vai exibir a introdução de boas vindas para o usuário. Extrai este código da função main e coloque na função exibeIntroducao():
@@ -1545,7 +1545,7 @@ func exibeIntroducao(){
     versao := 1.1
     fmt.Println("Olá, sr(a).", nome)
     fmt.Println("Este programa está na versão", versao)
-}COPIAR CÓDIGO
+}
 _ Não esqueça de chamar a função exibeIntroducao() na função main. _
 
 3- Vamos extrair também o código que exibe o menu de opções do usuário para uma função externa, chamda de exibeMenu:
@@ -1570,7 +1570,7 @@ func exibeMenu(){
     fmt.Println("1- Iniciar Monitoramento")
     fmt.Println("2- Exibir Logs")
     fmt.Println("0- Sair do Programa")    
-}COPIAR CÓDIGO
+}
 _ Não esqueça de chamar a função exibeMenu() na função main. _
 
 4- Por último, vamos criar uma função responsável por ler os comandos do usuário e exportar esta função da main também. A função leComando deve retornar um int com o comando lido pelo usuário:
@@ -1601,7 +1601,7 @@ func leComando() int {
     fmt.Println("O valor da variável comando é:", comandoLido)
 
     return comandoLido
-}COPIAR CÓDIGO
+}
 _ Não esqueça de capturar o comando lido na função main, para que ele possa ser utilizado pelo switch _
 
 5- Vamos por último adicionar nos itens finais do switch um ponto de saída para o nosso script, retornando para o sistema operacional se tudo correu bem ou não. Importe o pacote os do Go e utilize a função Exit() para informar o status de saída do programa:
@@ -1631,7 +1631,7 @@ func main() {
     }
 
 }
-    //... restante do arquivoCOPIAR CÓDIGO
+    //... restante do arquivo
 Pronto, nosso código está mais organizado e agora só falta implementar as funções de cada um dos casos do nosso switch.
 
 https://s3.amazonaws.com/caelum-online-public/624-golang/02/projetos/alura-golang-stage-fim-cap02.zip
@@ -1661,7 +1661,7 @@ Agora que já começamos a separar o nosso código em funções menores, já pod
 
 func iniciarMonitoramento() {
     fmt.Println("Monitorando...")
-}COPIAR CÓDIGO
+}
 E já vamos chamá-la caso o usuário digite o comando 1:
 
 package main
@@ -1689,7 +1689,7 @@ func main() {
     }
 }
 
-// restante do código omitidoCOPIAR CÓDIGO
+// restante do código omitido
 Se queremos que o programa fique testando se o site está online, ou caiu, ele precisa acessar o site. Se queremos acessar um site, precisamos realizar uma requisição web, utilizando a linguagem Go.
 
 Para fazer requisições web, existe um pacote especialista nisso, dentro do net, pacote de internet do Go, há o http, pacote responsável pelas requisições web:
@@ -1700,7 +1700,7 @@ import "fmt"
 import "os"
 import "net/http"
 
-// restante do código omitidoCOPIAR CÓDIGO
+// restante do código omitido
 Agora, vamos monitorar o site da Alura, então, na função iniciarMonitoramento, vamos definir uma variável com o nome do site:
 
 // restante do código omitido
@@ -1708,7 +1708,7 @@ Agora, vamos monitorar o site da Alura, então, na função iniciarMonitoramento
 func iniciarMonitoramento() {
     fmt.Println("Monitorando...")
     site := "https://www.alura.com.br"
-}COPIAR CÓDIGO
+}
 Com o site em mãos, vamos fazer uma requisição GET para o mesmo, utilizando a função Get, de http:
 
 // restante do código omitido
@@ -1717,7 +1717,7 @@ func iniciarMonitoramento() {
     fmt.Println("Monitorando...")
     site := "https://www.alura.com.br"
     http.Get(site)
-}COPIAR CÓDIGO
+}
 Quando acessamos o site da Alura através do browser, obtemos uma resposta, que é carregada no navegador. A mesma coisa acontece quando carregamos o site através do Go, essa resposta vem através de um retorno da função Get, que iremos guardar na variável resp:
 
 // restante do código omitido
@@ -1726,7 +1726,7 @@ func iniciarMonitoramento() {
     fmt.Println("Monitorando...")
     site := "https://www.alura.com.br"
     resp := http.Get(site)
-}COPIAR CÓDIGO
+}
 Ao salvar o arquivo, vemos que o Visual Studio Code aponta um erro, isso acontece porque a função Get retorna mais de um valor. Sim, existem funções no Go que retornam mais de um valor e a Get é uma delas, além da resposta, ela também retorna um possível erro que possa ter acontecido na requisição:
 
 // restante do código omitido
@@ -1735,7 +1735,7 @@ func iniciarMonitoramento() {
     fmt.Println("Monitorando...")
     site := "https://www.alura.com.br"
     resp, err := http.Get(site)
-}COPIAR CÓDIGO
+}
 Novidade isso, né? Vamos avaliar essa questão de funções que retornam mais de um valor no próximo vídeo.
 
 https://s3.amazonaws.com/caelum-online-public/624-golang/03/projetos/alura-golang-stage-fim-cap03.zip
@@ -1776,7 +1776,7 @@ Para entendermos melhor a questão das funções que retornam mais de um valor, 
 func devolveNome() string {
     nome := "Douglas"
     return nome
-}COPIAR CÓDIGO
+}
 E na função main, vamos guardar o retorno dessa função em uma variável e imprimi-la. Além disso, vamos comentar as chamadas das funções exibeIntroducao e exibeMenu, somente para não ficarmos com muita informação na tela:
 
 // restante do código omitido
@@ -1803,7 +1803,7 @@ func main() {
         fmt.Println("Não conheço este comando")
         os.Exit(-1)
     }
-}COPIAR CÓDIGO
+}
 Agora, além de devolver o nome, vamos fazer com quê a função também retorne a idade, para isso, basta separar os retornos por vírgula:
 
 // restante do código omitido
@@ -1812,7 +1812,7 @@ func devolveNomeEIdade() string {
     nome := "Douglas"
     idade := 24
     return nome, idade
-}COPIAR CÓDIGO
+}
 Além disso, precisamos adicionar o tipo int como retorno da função. Nesse caso, quando temos mais de um tipo, precisamos colocá-lo entre parênteses:
 
 // restante do código omitido
@@ -1821,7 +1821,7 @@ func devolveNomeEIdade() (string, int) {
     nome := "Douglas"
     idade := 24
     return nome, idade
-}COPIAR CÓDIGO
+}
 Logo, o primeiro valor que a função retorna é uma string, e o segundo é um número inteiro. E como agora a função retorna dois valores, nós precisamos criar duas variáveis:
 
 // restante do código omitido
@@ -1848,7 +1848,7 @@ func main() {
         fmt.Println("Não conheço este comando")
         os.Exit(-1)
     }
-}COPIAR CÓDIGO
+}
 Com isso, conseguimos criar uma função que retorna dois valores, uma string e um inteiro.
 
 Como ignorar algum retorno da função?
@@ -1880,7 +1880,7 @@ func main() {
         fmt.Println("Não conheço este comando")
         os.Exit(-1)
     }
-}COPIAR CÓDIGO
+}
 Esse operador diz para o Go ignorar o retorno, no nosso caso, o primeiro deles, pois só estamos interessados no segundo retorno. Então, se não queremos algum retorno de uma determinada função, no momento em que formos declarar as variáveis, basta utilizar esse operador no seu lugar.
 
 Do mesmo jeito, como não queremos tratar possíveis erros de requisição nesse momento, podemos ignorar esse retorno:
@@ -1892,7 +1892,7 @@ func iniciarMonitoramento() {
     site := "https://www.alura.com.br"
     resp, _ := http.Get(site)
     fmt.Println(resp)
-}COPIAR CÓDIGO
+}
 Feito isso, podemos voltar com o código que havíamos comentado, e remover a função que criamos, visto que ela foi feita somente para entendermos as funções de múltiplos retornos:
 
 package main
@@ -1949,7 +1949,7 @@ func iniciarMonitoramento() {
     site := "https://www.alura.com.br"
     resp, _ := http.Get(site)
     fmt.Println(resp)
-}COPIAR CÓDIGO
+}
 Com isso, podemos seguir com a construção da nossa aplicação, a partir do próximo vídeo.
 
 @@04
@@ -1971,7 +1971,7 @@ func main() {
 
 func devolveCidadeEPopulacao() (string, int, bool) {
     return "Vila Sem Nome", 4328, true
-}COPIAR CÓDIGO
+}
 Quando ela executar o programa, o que será impresso no terminal?
 
 Alternativa correta
@@ -1992,7 +1992,7 @@ Mas e a sigla do estado?
 Manoela se empolgou com seu pequeno programa e previu uma melhoria. Agora ela quer que a função retorne também o estado da cidade.
 func devolveCidadeEPopulacao() (string, int, bool, string) {
     return "Vila Sem Nome", 4328, true, "RJ"
-}COPIAR CÓDIGO
+}
 Mas por enquanto não quer utilizá-la no programa. O que ela deve fazer na função main abaixo para que o programa compile sem utilizar o estado?
 
 func main() {
@@ -2002,7 +2002,7 @@ func main() {
     } else {
         fmt.Println("A cidade ", cidade, "tem", populacao, "habitantes")
     }
-}COPIAR CÓDIGO
+}
 Alternativa correta
 cidade, populacao, capital, _ := devolveCidadeEPopulacao()
  
@@ -2024,7 +2024,7 @@ Agora que entendemos a questão das funções com múltiplos retornos, podemos v
 &{200 OK 200 HTTP/2.0 2 0 map[X-Cloud-Trace-Context:[6f3fa7e590ac68bd43d76c82a67df476] Date:[Tue, 13 Jun 2017 21:20:36
 GMT] Server:[Google Frontend] X-Ua-Compatible:[IE=edge,chrome=1] Expires:[Tue, 13 Jun 2017 21:50:36 GMT] Content-Type:[
 text/html] Cache-Control:[public, max-age=1800] Age:[1298] X-Dns-Prefetch-Control:[on]] 0xc4200d4900 -1 [] false true m
-ap[] 0xc42000a800 0xc4203a3080}COPIAR CÓDIGO
+ap[] 0xc42000a800 0xc4203a3080}
 Nessa resposta, temos o status da requisição, a data, os cabeçalhos, entre outras informações. O que nos informa se um site carregou com sucesso, ou teve algum problema, é o status da requisição. Quando temos um status 200, significa que o site foi carregado perfeitamente. Então, se obtivermos algum status diferente de 200, significa que o nosso site está com problema.
 
 Para saber o status da resposta, podemos acessar a sua propriedade StatusCode. Logo, podemos fazer um if, se o status for 200, nós imprimimos uma mensagem de sucesso, mas se não for, nós imprimimos uma mensagem dizendo que o site está com problema, imprimindo o status em seguida:
@@ -2041,7 +2041,7 @@ func iniciarMonitoramento() {
     } else {
         fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
     }
-}COPIAR CÓDIGO
+}
 Ao executar o programa, recebemos uma mensagem de sucesso. Para não termos que ficar dependendo do site da Alura cair, podemos inventar uma URL inexistente, por exemplo:
 
 // restante do código omitido
@@ -2057,7 +2057,7 @@ func iniciarMonitoramento() {
     } else {
         fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
     }
-}COPIAR CÓDIGO
+}
 Assim recebemos um status code 404. Ou podemos utilizar o site https://random-status-code.herokuapp.com/, que nos retorna um status diferente à cada requisição.
 
 Colocando o nosso programa em loop
@@ -2095,7 +2095,7 @@ func main() {
     }
 }
 
-// outras funções omitidasCOPIAR CÓDIGO
+// outras funções omitidas
 Agora, ao rodar o nosso programa, vemos que após digitar o comando e ter o seu código executado, o menu volta a ser exibido, logo o nosso código está em loop. Para sair do loop, basta que digitemos a opção 0.
 
 Com isso, avançamos mais na nossa aplicação, nos próximos capítulos colocaremos mais sites para o programa monitorar, escrever no log, entre outras funcionalidades!
@@ -2104,7 +2104,7 @@ Com isso, avançamos mais na nossa aplicação, nos próximos capítulos colocar
 Resultado de uma requisição HTTP
 
 Suponha que capturemos o resultado da função http.Get assim:
-resultado, _ := http.Get("https://alura.com.br")COPIAR CÓDIGO
+resultado, _ := http.Get("https://alura.com.br")
 Qual propriedade usaremos para verificar o código de retorno de uma requisição HTTP?
 
 Alternativa correta
@@ -2170,7 +2170,7 @@ func iniciarMonitoramento() {
     fmt.Println("Monitorando...")
     site := "https://www.alura.com.br/"
     resp, _ := http.Get(site)
-}COPIAR CÓDIGO
+}
 2- Vamos fazer uma verificação através do status code da requisição para averiguar se o site está online ou sofreu alguma queda. Teste para ver se o status code é 200 e exiba mensagens de acordo. Utilize o operador _ para não ter lidar com o segundo parâmetro de erro agora.
 
 func iniciarMonitoramento() {
@@ -2183,7 +2183,7 @@ func iniciarMonitoramento() {
     } else {
         fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
     }
-}COPIAR CÓDIGO
+}
 3- Agora com a função de monitoramento pronta, vamos colocar um loop infinito na função main, para que o usuário possa acessar o menu repetidas vezes até que ele escolha sair. Para isto, utilize a instrução for pura:
 
 func main() {
@@ -2202,7 +2202,7 @@ func main() {
 
     }
 }
-COPIAR CÓDIGO
+
 Pronto, agora o nosso usuário já consegue monitorar pelo menos um site até quando ele desejar sair do programa!
 
 https://s3.amazonaws.com/caelum-online-public/624-golang/03/projetos/alura-golang-stage-fim-cap03.zip
@@ -2245,7 +2245,7 @@ func iniciarMonitoramento() {
     } else {
         fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
     }
-}COPIAR CÓDIGO
+}
 É importante nos atentar ao tipo de dados do array, não há espaço entre ele e os colchetes, na hora da declaração do array.
 
 Colocando um valor dentro do array
@@ -2269,23 +2269,23 @@ func iniciarMonitoramento() {
     } else {
         fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
     }
-}COPIAR CÓDIGO
+}
 Mas o fato do array ter um tamanho fixo, nos limita um pouco, pois se quisermos adicionar 5 itens no array, teremos que alterar o seu tamanho na sua declaração. Por isso, em Go, geralmente não trabalhamos com arrays, e sim com uma outra estrutura de dados, chamada Slice, que funciona em cima do array, mas não tem tamanho fixo.
 
 Veremos mais sobre isso no próximo vídeo.
 
 @@02
 Seu Valdomiro foi à feira
-PRÓXIMA ATIVIDADE
+
 
 Seu Valdomiro foi à feira e comprou 3 frutas. Sua bolsa tinha capacidade para guardar 4 frutas.
 var frutas [4] string
 frutas[0] = "Abacaxi"
 frutas[1] = "Laranja"
-frutas[2] = "Morango"COPIAR CÓDIGO
+frutas[2] = "Morango"
 O que vai acontecer se executarmos o código abaixo?
 
-fmt.Println(frutas[3])COPIAR CÓDIGO
+fmt.Println(frutas[3])
 Alternativa correta
 Será impresso uma string vazia.
  
@@ -2298,7 +2298,6 @@ Quando os arrays são criados, eles assumem os valores padrão para os tipos de 
 
 @@03
 Para saber mais: funções que retornam arrays
-PRÓXIMA ATIVIDADE
 
 Considere o código abaixo.
 package main
@@ -2319,7 +2318,7 @@ func devolveEstadosDoSudeste() [4]string {
     estados[2] = "MG"
     estados[3] = "ES"
     return estados
-}COPIAR CÓDIGO
+}
 O que será impresso no terminal?
 
 Alternativa correta
@@ -2343,18 +2342,18 @@ Para criar um slice, podemos utilizar a declaração curta de variáveis. Sua de
 
 func exibeNomes() {
     nomes := []string
-}COPIAR CÓDIGO
+}
 Além disso, já na sua declaração, podemos preencher os seus dados, passando-os dentro de chaves, separados por vírgula:
 
 func exibeNomes() {
     nomes := []string{"Douglas", "Daniel", "Bernardo"}
-}COPIAR CÓDIGO
+}
 O slice infere o seu tamanho de acordo com a sua quantidade de elementos. Podemos verificar isso imprimindo a quantidade de itens contidos nele, através da função len:
 
 func exibeNomes() {
     nomes := []string{"Douglas", "Daniel", "Bernardo"}
     fmt.Println(len(nomes))
-}COPIAR CÓDIGO
+}
 Ao chamar essa função, vemos que o slice possui 3 itens.
 
 Diferenças entre Array e Slice
@@ -2370,7 +2369,7 @@ func exibeNomes() {
 
     nomes = append(nomes, "Aparecida")
     fmt.Println("O meu slice tem", len(nomes), "itens")
-}COPIAR CÓDIGO
+}
 Mas a função len informa a quantidade de itens contidos nele, e não a sua capacidade. Para descobrir a sua capacidade, devemos utilizar a função cap:
 
 func exibeNomes() {
@@ -2381,25 +2380,24 @@ func exibeNomes() {
     nomes = append(nomes, "Aparecida")
     fmt.Println("O meu slice tem", len(nomes), "itens")
     fmt.Println("O meu slice tem capacidade para", cap(nomes), "itens")
-}COPIAR CÓDIGO
+}
 Ao executar a função, temos a seguinte saída:
 
 O meu slice tem 3 itens
 O meu slice tem capacidade para 3 itens
 O meu slice tem 4 itens
-O meu slice tem capacidade para 6 itensCOPIAR CÓDIGO
+O meu slice tem capacidade para 6 itens
 Ou seja, o slice dobrou de tamanho quando adicionamos um novo item! Então, sempre que estourarmos a capacidade máxima do slice, do array abaixo dele, ele dobra de tamanho.
 
 Logo, o slice nada mais é do que o Go cuidando do array para nós, pois eles não funcionam de forma diferente. O slice é um array com algumas coisas abstraídas, evitando com que nos preocupemos com o tamanho e capacidade do array, focando somente em trabalhar com os dados.
 
 @@05
 Planning Poker
-PRÓXIMA ATIVIDADE
 
 Planning Poker é uma técnica de estimativa geralmente usada nas reuniões da metodologia Scrum. É chamada de poker porque utiliza um baralho com cartas numeradas.
 Reinaldo é um Scrum Master que deseja implementar a idéia no Go. Começou por montar um slice com os pontos do Scrum.
 
-pontosPlanningPoker := [] int {1, 2, 3, 5, 8, 13, 21}COPIAR CÓDIGO
+pontosPlanningPoker := [] int {1, 2, 3, 5, 8, 13, 21}
 Como Reinaldo pode saber quantas cartas ele vai precisar para fazer a técnica? Dica: verifique o tamanho do slice.
 
 Alternativa correta
@@ -2415,16 +2413,15 @@ Isso aí! A função que usamos para descobrir o tamanho de uma slice é len().
 
 @06
 Mais cartas no baralho
-PRÓXIMA ATIVIDADE
 
 No exercício anterior, Reinaldo criou um slice que representava os pontos utilizados numa técnica de estimativa chamada Planning Poker.
-pontosPlanningPoker := [] int {1, 2, 3, 5, 8, 13, 21}COPIAR CÓDIGO
+pontosPlanningPoker := [] int {1, 2, 3, 5, 8, 13, 21}
 Contudo, ele se esqueceu de colocar uma última pontuação, 40. Em vez de mudar o código de inicialização do slice, usou a função append.
 
-pontosPlanningPoker = append(pontosPlanningPoker, 40)COPIAR CÓDIGO
+pontosPlanningPoker = append(pontosPlanningPoker, 40)
 O que será impresso no terminal quando ele executar o seguinte código:
 
-fmt.Println(cap(pontosPlanningPoker))COPIAR CÓDIGO
+fmt.Println(cap(pontosPlanningPoker))
 Alternativa correta
 Não é possível determinar porque o slice usa um número randômico para aumentar sua capacidade.
  
@@ -2456,7 +2453,7 @@ func iniciarMonitoramento() {
     } else {
         fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
     }
-}COPIAR CÓDIGO
+}
 Agora que temos uma coleção de sites, podemos monitorar mais de um site ao mesmo tempo. Para isso, devemos percorrer os elementos nosso slice, acessando e monitorando cada site.
 
 Percorrendo os itens do slice
@@ -2484,7 +2481,7 @@ func iniciarMonitoramento() {
     } else {
         fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
     }
-}COPIAR CÓDIGO
+}
 Mas há uma forma mais enxuta de fazer isso em Go, utilizando o range. Ela é como se fosse um operador de iteração do Go, nos dando acesso a cada item do array, ou do slice, e ele nos retorna dos valores, a posição do item iterado e o próprio item daquela posição:
 
 // restante do código omitido
@@ -2508,14 +2505,13 @@ func iniciarMonitoramento() {
     } else {
         fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
     }
-}COPIAR CÓDIGO
+}
 Agora que conseguimos passar por cada item do slice, basta fazer com cada um deles o que já fazemos fora do for, ou seja, fazer uma requisição para o site e verificar o seu status code.
 
 Faremos isso no próximo vídeo.
 
 @@08
 Percorrendo o slice
-PRÓXIMA ATIVIDADE
 
 Considere o código abaixo
 package main
@@ -2527,7 +2523,7 @@ func main() {
     for i := 0; i < len(pontosPlanningPoker); i++ {
         fmt.Println(pontosPlanningPoker[i])
     }
-}COPIAR CÓDIGO
+}
 Defina o conteúdo da próxima linha, de maneira que ela faça o programa compilar.
 
 package main
@@ -2539,7 +2535,7 @@ func main() {
     for ________________________________ {
         fmt.Println("O ponto na posição", i, " tem o valor", ponto)
     }
-}COPIAR CÓDIGO
+}
 Alternativa correta
 i, ponto := range(pontosPlanningPoker)
  
@@ -2565,7 +2561,7 @@ func testaSite(site string) {
     } else {
         fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
     }
-}COPIAR CÓDIGO
+}
 Agora chamamos essa função dentro do for, para cada item do nosso slice. Vamos aproveitar e diminuir a mensagem de teste e adicionar uma linha em branco, para dar um espaçamento entre as mensagens e o menu:
 
 // restante do código omitido
@@ -2582,7 +2578,7 @@ func iniciarMonitoramento() {
     }
 
     fmt.Println("")
-}COPIAR CÓDIGO
+}
 Ao executar o programa, todos os sites do slice são monitorados.
 
 Mas os sites são testados uma única vez e para testarmos novamente, devemos digitar o comando 1. Então, vamos fazer com que os sites sejam testados 5 vezes a cada monitoramento. Para isso, criamos mais um loop:
@@ -2603,7 +2599,7 @@ func iniciarMonitoramento() {
     }
 
     fmt.Println("")
-}COPIAR CÓDIGO
+}
 Aumentando o intervalo entre os monitoramentos
 Mas o for executa muito rápido, então testaríamos cinco vezes cada site com um intervalo mínimo entre cada teste. Seria interessante termos um intervalo maior entre os testes, por exemplo de 5 em 5 minutos.
 
@@ -2625,7 +2621,7 @@ func iniciarMonitoramento() {
         time.Sleep(5 * time.Minute)
     }
     fmt.Println("")
-}COPIAR CÓDIGO
+}
 No caso estamos testando de 5 em 5 minutos, mas esse tempo pode ser aumentado.
 
 Criando constantes
@@ -2647,7 +2643,7 @@ import (
 const monitoramentos = 3
 const delay = 5
 
-// restante do código omitidoCOPIAR CÓDIGO
+// restante do código omitido
 Agora, na função iniciarMonitoramento, utilizamos essas constantes:
 
 // restante do código omitido
@@ -2668,7 +2664,7 @@ func iniciarMonitoramento() {
     }
 
     fmt.Println("")
-}COPIAR CÓDIGO
+}
 Agora, se quisermos alterar o delay ou a quantidade de monitoramentos, basta alterarmos diretamente na declaração das constantes. E para finalizar, vamos adicionar mais alguns espaçamentos, a cada monitoramento dos nossos sites e depois que o comando foi escolhido:
 
 // restante do código omitido
@@ -2697,12 +2693,11 @@ func iniciarMonitoramento() {
         fmt.Println("")
     }
     fmt.Println("")
-}COPIAR CÓDIGO
+}
 Com isso, conseguimos monitorar mais de uma vez múltiplos sites.
 
 @@10
 Cronômetro
-PRÓXIMA ATIVIDADE
 
 Fábio é um personal trainer e encomendou um programa para marcar o tempo de seus clientes.
 O desenvolvedor está tendo dificuldades para fazer o seguinte programa compilar. Você pode ajudá-lo?
@@ -2730,7 +2725,7 @@ func main() {
 
     fmt.Println("Período de alongamento...")
     time.Sleep(alongamento * time.Minute)
-}COPIAR CÓDIGO
+}
 Alternativa correta
 Falta incluir a constante alongamento:
 const alongamento = 1
@@ -2748,7 +2743,6 @@ import "time"
 
 @@11
 Mãos na Massa: Testando múltiplos sites
-PRÓXIMA ATIVIDADE
 
 Começando deste ponto? Você pode fazer o DOWNLOAD completo do projeto do capítulo anterior e continuar seus estudos a partir deste capítulo.
 Neste exercício vamos melhorar o monitoramento de nosso programa, para que ele monitore mais de um site ao mesmo tempo.
@@ -2765,7 +2759,7 @@ func iniciarMonitoramento() {
     sites := []string{"https://random-status-code.herokuapp.com/", 
         "https://www.alura.com.br", "https://www.caelum.com.br"}
     //restante da função
-}COPIAR CÓDIGO
+}
 2- Como queremos que cada um destes sites seja testado uma vez, vamos um for para percorrer o slice inteiro, utilize o range para facilitar:
 
 //hello.go
@@ -2781,7 +2775,7 @@ func iniciarMonitoramento() {
     for i, site := range sites {
         // restante 
     }
-}COPIAR CÓDIGO
+}
 3- Vamos agora extrair o nosso código que testa um site para uma função externa, para facilitar na hora que estamos iterando sobre o slice, aonde cada site deve executar uma vez a função. Crie a função testaSite que deve receber uma string com o site a ser testado e mova o código go http.Get para lá:
 
 //hello.go 
@@ -2796,7 +2790,7 @@ func testaSite(site string) {
     } else {
         fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
     }
-}COPIAR CÓDIGO
+}
 4- Vamos agora chamar a testa site dentro do nosso for que está varrendo o slice:
 
 // restante do código omitido
@@ -2813,7 +2807,7 @@ func iniciarMonitoramento() {
     }
 
     fmt.Println("")
-}COPIAR CÓDIGO
+}
 _ Adicione o fmt.Println("") vazio ao final, e o que está dentro do for também, para que o nosso script vá exibindo mensagens para o nosso usuário enquanto ele é executado._
 
 Execute o nosso script e veja que agora conseguimos testar diversos sites, e ao final do teste o nosso Menu surge para escolhermos a opção de monitorar novamente.
@@ -2828,7 +2822,6 @@ https://random-status-code.herokuapp.com/
 
 @@12
 Mãos na Massa: Delay e Aumentando o número de testes
-PRÓXIMA ATIVIDADE
 
 Agora vamos fazer com que a cada vez que o usuário selecione a opção de monitoramento, cada site seja testado mais de uma vez, de acordo com o que o usuário setar nas constantes.
 1- Primeiro crie a constante monitoramentos que indicará quantas vezes o site será testado. Coloque o número que desejar, mas lembre-se que quanto mais você testar, mais o script vai demorar:
@@ -2844,7 +2837,7 @@ import (
 
 const monitoramentos = 3
 
-// restante do arquivoCOPIAR CÓDIGO
+// restante do arquivo
 2- Agora vamos colocar um for dentro da função iniciarMonitoramentos para que o slice seja percorrido o número de vezes que configuramos na constante:
 
 //hello.go
@@ -2866,7 +2859,7 @@ func iniciarMonitoramento() {
     }
 
     fmt.Println("")
-}COPIAR CÓDIGO
+}
 3- Para que haja uma pausa entre cada um dos testes que faremos, vamos adicionar um pequeno delay entre cada iteração de monitoramento. Utilize a função Sleep do pacote time para dar uma pausa entre monitoramentos. Para que o tamanho desta pausa fique configurável, vamos criar uma constante que vai dizer o tamanho do delay:
 
 //hello.go
@@ -2881,7 +2874,7 @@ import (
 const monitoramentos = 3
 const delay = 5
 
-// restante do arquivoCOPIAR CÓDIGO
+// restante do arquivo
 4- E a partir do valor da constante, vamos adicionar um time.Sleep na função iniciarMonitoramento. Vamos multiplicar a nossa contante (delay) pela constante que representa o número de segundos no Go(time.Seconds):
 
 func iniciarMonitoramento() {
@@ -2901,7 +2894,7 @@ func iniciarMonitoramento() {
         fmt.Println("")
     }
     fmt.Println("")
-}COPIAR CÓDIGO
+}
 _ Adicione o outro fmt.Println("") para que a exibição fique mais organizada para o seu usuário_
 
 Agora o seu script deve estar testando os seus sites de acordo com o número de vezes que você setou na constante monitoramentos, e entre cada testada ele deve dar uma pausa de acordo com o número de segundos que você configurou na constante delay.
@@ -2933,7 +2926,7 @@ Para trabalhar com isso, devemos saber como trabalhamos com arquivo em Go, mais 
 
 func leSitesDoArquivo() []string {
 
-}COPIAR CÓDIGO
+}
 Agora, na função iniciarMonitoramento, ao invés de criar o slice na mão, nós criamos a partir do retorna dessa função:
 
 // restante do código omitido
@@ -2953,7 +2946,7 @@ func iniciarMonitoramento() {
         fmt.Println("")
     }
     fmt.Println("")
-}COPIAR CÓDIGO
+}
 Pronto, agora falta implementarmos a função. Antes de ler os dados do arquivo, devemos saber como abri-lo.
 
 Abrindo um arquivo em Go
@@ -2963,7 +2956,7 @@ Para abrir um arquivo em Go, precisamos pedir ao sistema operacional que abra o 
 
 func leSitesDoArquivo() []string {
     arquivo, _ := os.Open("sites.txt")
-}COPIAR CÓDIGO
+}
 Vamos fazer um teste agora, vamos imprimir o arquivo, criar um slice vazio e retorná-lo:
 
 // restante do código omitido
@@ -2975,7 +2968,7 @@ func leSitesDoArquivo() []string {
     fmt.Println(arquivo)
 
     return sites
-}COPIAR CÓDIGO
+}
 Agora, ao executar o programa e iniciar o monitoramento, vemos uma impressão <nil>. O que isso significa? Isso equivale ao null de outras linguagens de programação, ou seja, nosso arquivo está nulo. Isso acontece pois estamos abrindo um arquivo que não existe!
 
 Mas como sabemos disso? Sabemos pois foi um erro proposital, já que estamos sendo descuidados, pois estamos ignorando os erros. Em nenhum momentos estamos tratando os erros da linguagem de programação, já que, ao tentar abrir um arquivo que não existe, era para o sistema operacional nos avisar isso, mas estamos ignorando esses avisos, tanto no momento de abrir um arquivo, quanto no momento de realizar as requisições para os sites.
@@ -2984,7 +2977,6 @@ Então, vamos ver como tratar esses erros no próximo vídeo.
 
 @@02
 Abrindo arquivo no Go
-PRÓXIMA ATIVIDADE
 
 Qual o código para abrir corretamente um arquivo no Go?
 Alternativa correta
@@ -3011,7 +3003,7 @@ func leSitesDoArquivo() []string {
     fmt.Println(arquivo)
 
     return sites
-}COPIAR CÓDIGO
+}
 E agora, se err não for nulo, significa que houve um erro, então vamos imprimi-lo:
 
 // restante do código omitido
@@ -3028,10 +3020,10 @@ func leSitesDoArquivo() []string {
     fmt.Println(arquivo)
 
     return sites
-}COPIAR CÓDIGO
+}
 Agora, ao executar o programa e iniciar o monitoramento, vemos a seguinte impressão:
 
-Ocorreu um erro: open sites.txt: no such file or directoryCOPIAR CÓDIGO
+Ocorreu um erro: open sites.txt: no such file or directory
 Agora está bem claro o que aconteceu, que o arquivo, ou o diretório, não foi encontrado. Agora, vamos tratar do outro erro que estamos ignorando, no momento em que fazemos a requisição para o site, na função testaSite:
 
 // restante do código omitido
@@ -3049,15 +3041,14 @@ func testaSite(site string) {
     } else {
         fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
     }
-}COPIAR CÓDIGO
+}
 Agora que já estamos detectando os erros do programa, vamos prosseguir com a leitura do arquivo.
 
 @@04
 Capturando erros
-PRÓXIMA ATIVIDADE
 
 Suponha que o arquivo "sites.txt" não existe. Quando o código abaixo é executado, a variável err conterá o erro de arquivo inexistente.
-arquivo, err := os.Open("sites.txt")COPIAR CÓDIGO
+arquivo, err := os.Open("sites.txt")
 O que o programador deve fazer para tratar esse erro?
 
 Alternativa correta
@@ -3089,7 +3080,7 @@ Lendo de um arquivo
 Se o erro que está ocorrendo é que o sites.txt não existe, então vamos criá-lo dentro da pasta hello, com o conteúdo que estava no nosso slice:
 https://random-status-code.herokuapp.com/
 https://www.alura.com.br
-https://www.caelum.com.brCOPIAR CÓDIGO
+https://www.caelum.com.br
 Agora, ao executar o programa e iniciar o monitoramento, vemos um código estranho sendo impresso, isso acontece pois o que a função Open nos retorna nada mais é do que um ponteiro para o arquivo em si.
 
 Então, precisamos ler o arquivo de outro jeito, e há diversas maneiras para isso. Uma delas, um jeito fácil e rápido para ler um arquivo inteiro, sem ter que ler linha a linha, é utilizar o pacote io/ioutil.
@@ -3111,7 +3102,7 @@ func leSitesDoArquivo() []string {
     fmt.Println(arquivo)
 
     return sites
-}COPIAR CÓDIGO
+}
 Essa função nos retorna o arquivo em um array de bytes, então basta convertê-los para uma string através da função string:
 
 // restante do código omitido
@@ -3128,7 +3119,7 @@ func leSitesDoArquivo() []string {
     fmt.Println(string(arquivo))
 
     return sites
-}COPIAR CÓDIGO
+}
 Ao executar o programa, iniciar o monitoramento, vemos o conteúdo do arquivo sendo impresso no console! Mas esse é um jeito bom para quem quer exibir o conteúdo todo do arquivo, o que não é muito útil para nós, já que queremos ler cada site de uma vez, para salvar cada um dentro do slice.
 
 Lendo a primeira linha do arquivo
@@ -3146,7 +3137,7 @@ func leSitesDoArquivo() []string {
     }
 
     return sites
-}COPIAR CÓDIGO
+}
 E com o bufio, nós criamos um leitor através da função NewReader, que recebe o arquivo a ser lido:
 
 // restante do código omitido
@@ -3163,7 +3154,7 @@ func leSitesDoArquivo() []string {
     leitor := bufio.NewReader(arquivo)
 
     return sites
-}COPIAR CÓDIGO
+}
 Com esse leitor, temos funções que nos ajudam a ler o arquivo, lendo linha a linha, como por exemplo a ReadString, que lê uma linha do arquivo e nos retorna em forma de string. Essa função deve receber um byte delimitador, para saber até onde queremos ler a linha.
 
 No nosso caso, queremos ler a linha inteiro, ou seja, até a quebra de linha, que é representada pelo \n. Como queremos representar um byte, utilizaremos aspas simples:
@@ -3184,7 +3175,7 @@ func leSitesDoArquivo() []string {
     leitor.ReadString('\n')
 
     return sites
-}COPIAR CÓDIGO
+}
 Essa função nos retorna a linha e um possível erro, que vamos detectar. Além disso, vamos imprimir a linha:
 
 // restante do código omitido
@@ -3208,12 +3199,11 @@ func leSitesDoArquivo() []string {
     fmt.Println(linha)
 
     return sites
-}COPIAR CÓDIGO
+}
 Quando iniciamos o monitoramento, a primeira linha do arquivo é impressa. Mas queremos ler todas as linhas do arquivo, então como fazemos isso? Veremos no próximo vídeo.
 
 @@06
 Obtendo o conteúdo de um arquivo
-PRÓXIMA ATIVIDADE
 
 Observe o código abaixo, que abre o arquivo existente "sites.txt".
 package main
@@ -3230,7 +3220,7 @@ func main() {
     fmt.Println("Ocorreu um erro:", err)
   }
   leitor := bufio.NewReader(arquivo)
-}COPIAR CÓDIGO
+}
 O que você deve fazer para ler a primeira linha do arquivo?
 
 Alternativa correta
@@ -3272,7 +3262,7 @@ func leSitesDoArquivo() []string {
     }
 
     return sites
-}COPIAR CÓDIGO
+}
 Mas como saímos do for? Se houver o erro, que já estamos verificando, nós damos um break, que faz com que o código saia do loop:
 
 // restante do código omitido
@@ -3297,14 +3287,14 @@ func leSitesDoArquivo() []string {
     }
 
     return sites
-}COPIAR CÓDIGO
+}
 Ao iniciar o monitoramento, vemos a seguinte impressão:
 
 https://random-status-code.herokuapp.com/
 
 https://www.alura.com.br
 
-https://www.caelum.com.brCOPIAR CÓDIGO
+https://www.caelum.com.br
 A impressão está sendo desse jeito pois estamos pulando linha no arquivo, então ela é lida também. O leitor lê a linha, incluindo o \n, por isso que fica esse pulo de linha na hora de impressão.
 
 Logo, devemos remover essa quebra de linha da linha lida, antes de adicioná-la ao slice. Para isso, existe a função TrimSpace, do pacotes strings, que remove as quebras de linha e espaços ao final de uma string:
@@ -3332,7 +3322,7 @@ func leSitesDoArquivo() []string {
     }
 
     return sites
-}COPIAR CÓDIGO
+}
 Agora, as linhas são impressas sem quebra de linha. Logo, já podemos adicioná-las ao slice:
 
 // restante do código omitido
@@ -3358,7 +3348,7 @@ func leSitesDoArquivo() []string {
     }
 
     return sites
-}COPIAR CÓDIGO
+}
 Ao executar o programa novamente e iniciar o monitoramento, podemos perceber que os sites são monitorados corretamente! Agora, se quisermos adicionar mais sites, basta colocá-los no arquivo sites.txt.
 
 Por último, devemos ser educados com o sistema operacional, se abrimos um arquivo com os.Open, após lê-lo, é uma boa prática fechá-lo com a função Close:
@@ -3392,7 +3382,6 @@ func leSitesDoArquivo() []string {
 
 @@08
 Mãos na Massa: Lendo sites do arquivo
-PRÓXIMA ATIVIDADE
 
 Começando deste ponto? Você pode fazer o DOWNLOAD completo do projeto do capítulo anterior e continuar seus estudos a partir deste capítulo.
 Neste exercício vamos fazer com que os sites monitorados venham de um arquivo .txt para que fique fácil adicionar ou remover um site do monitoramento, além disto vamos colocar algumas detecções de erro em nossas funções.
@@ -3415,7 +3404,7 @@ func testaSite(site string) {
     } else {
         fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
     }
-}COPIAR CÓDIGO
+}
 2- Agora vamos começar a ler os nossos sites de um arquivo .txt. Crie um arquivo de texto chamado sites.txt e coloque os sites que você quer monitorar lá, um em cada linha:
 
 sites.txt
@@ -3423,7 +3412,7 @@ sites.txt
 https://www.alura.com.br    
 https://random-status-code.herokuapp.com 
 https://www.caelum.com.br
-https://www.casadocodigo.com.brCOPIAR CÓDIGO
+https://www.casadocodigo.com.br
 3- Para ler este arquivo, vamos criar a função leSitesDoArquivo, que vai retornar para o nosso slice de sites preenchido de acordo com os sites do arquivo sites.txt. Crie a função leSitesDoArquivo que vai retornar um slice de strings:
 
  func leSitesDoArquivo() []string {
@@ -3432,7 +3421,7 @@ https://www.casadocodigo.com.brCOPIAR CÓDIGO
 
 
     return sites
-}COPIAR CÓDIGO
+}
 4- Agora vamos abrir o arquivo de sites.txt e detectar caso algum erro aconteça na abertura. Vamos utilizar o pacote os para abrir com a função `Open:
 
 func leSitesDoArquivo() []string {
@@ -3448,7 +3437,7 @@ func leSitesDoArquivo() []string {
 
     arquivo.Close()
     return sites
-}COPIAR CÓDIGO
+}
 Não esqueça de fechar o arquivo no final com a função Close() do arquivo
 
 5- Agora vamos criar um leitor com o pacote bufio, para que facilite o processo de percorrer o arquivo sites.txt:
@@ -3468,8 +3457,9 @@ func leSitesDoArquivo() []string {
 
     arquivo.Close()
     return sites
-}COPIAR CÓDIGO
-6- Agora vamos utilizar um for e ler linha a linha até que o leitor encontre o EOF, o que nos dará um erro e utilizaremos a instrução break para sair do loop, indicando que chegamos ao final. Para ler cada linha utilizaremos a função ReadString do leitor, lendo até o caractere \n que indica o final da linha:
+}
+
+@@06- Agora vamos utilizar um for e ler linha a linha até que o leitor encontre o EOF, o que nos dará um erro e utilizaremos a instrução break para sair do loop, indicando que chegamos ao final. Para ler cada linha utilizaremos a função ReadString do leitor, lendo até o caractere \n que indica o final da linha:
 
 func leSitesDoArquivo() []string {
 
@@ -3493,7 +3483,7 @@ func leSitesDoArquivo() []string {
 
     arquivo.Close()
     return sites
-}COPIAR CÓDIGO
+}
 7- Por último vamos dar um trim em cada linha lida para remover caracteres especiais, como \n , espaços e tabs. E claro, após isto vamos adicionar a linha ao slice de sites:
 
 func leSitesDoArquivo() []string {
@@ -3521,7 +3511,7 @@ func leSitesDoArquivo() []string {
 
     arquivo.Close()
     return sites
-}COPIAR CÓDIGO
+}
 8- Agora vamos chamar a nossa função récem criada dentro função iniciarMonitoramento, para que ao invés de obtermos os sites de um slice fixo, obteremos do arquivo sites.txt:
 
 func iniciarMonitoramento() {
@@ -3530,7 +3520,7 @@ func iniciarMonitoramento() {
     sites := leSitesDoArquivo()
 
     // restante da função
-}COPIAR CÓDIGO
+}
 Faça o teste, adicione novos sites ao arquivos sites.txt e verifique se os sites estão sendos lidos e testados corretamente.
 
 https://s3.amazonaws.com/caelum-online-public/624-golang/05/projetos/alura-golang-stage-fim-cap05.zip
@@ -3546,3 +3536,714 @@ Ler um arquivo por completo com o pacote io/ioutil
 Ler linha a linha com o pacote bufio
 Criação de leitores
 Limpando strings com TrimSpace
+
+#### 15/09/2023
+
+@07-Escrevendo arquivos
+
+@@01
+Abrindo e criando um arquivo
+
+Com o monitoramento concluído, falta implementarmos a opção do nosso programa de escrever logs. Para isso, teremos que escrever em arquivos, para registrar em um arquivo de texto quando o site estava online e quando estava offline, inclusive o horário em que isso ocorrer.
+Para isso, vamos criar a função registraLog:
+
+// restante do código omitido
+
+func registraLog() {
+
+}
+Essa função tem que salvar o site e o seu status, logo ela precisa ter acesso a esses dois valores. Então, vamos recebê-los por parâmetro, sendo o status um booleano (true para o site online e false para offline):
+
+// restante do código omitido
+
+func registraLog(site string, status bool) {
+
+}
+Agora, na função testaSite, se a o site for carregado com sucesso, nós chamamos a função registraLog, passando o valor true, mas se não for carregado com sucesso, passamos o valor false:
+
+// restante do código omitido
+
+func testaSite(site string) {
+
+    resp, err := http.Get(site)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+        registraLog(site, true)
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+        registraLog(site, false)
+    }
+}
+Agora, ao invés de criarmos o arquivo na mão, podemos pedir para o Go fazer isso, mas como?
+
+Criando um arquivo com Go
+Para o Go criar um arquivo, podemos utilizar a função OpenFile, também do pacote os. Ela recebe o nome do arquivo, uma flag para representar o que fazer com o arquivo, e o seu tipo de permissão. Há diversas flags que podemos utilizar, elas podem ser vistar aqui.
+
+No nosso caso, se o arquivo não existir, queremos criá-lo, então vamos utilizar a flag O_CREATE ou O_RDWR, para ler e escrever no arquivo. Além disso, vamos dar a permissão 0666 para ele:
+
+// restante do código omitido
+
+func registraLog(site string, status bool) {
+
+    arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR, 0666)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    fmt.Println(arquivo)
+}
+Com isso, já conseguimos criar o arquivo, falta escrever nele. Veremos como fazer isso no próximo vídeo.
+
+https://golang.org/pkg/os/#pkg-constants
+
+@@02
+O livro de receitas
+
+João está montando um livro de receitas , e para isto está utilizando sua linguagem favorita, o Go. Para isto, ele quer conseguir escrever no arquivo receitas.txt, que nem sempre vai existir no computador de quem rodar o script do João.
+Qual das funções abaixo permite a ele a possibilidade de criar o arquivo receitas.txt caso ele não exista, ou escrever nele caso ele já esteja presente ?
+
+Alternativa correta
+os.Open("receitas.txt", os.O_RDWR|os.O_CREATE, 0666)
+ 
+Alternativa correta
+os.OpenFile("receitas.txt", O_RDWR|O_CREATE, 0666)
+ 
+Alternativa correta
+os.Open("receitas.txt", os.O_RDWR|os.O_CREATE)
+ 
+Alternativa correta
+os.OpenFile("receitas.txt", os.O_RDWR|os.O_CREATE, 0666)
+ 
+Correto! A função os.OpenFile é mais poderosa que a função os.Open e nos permite configurar determinadas flags para configurar como o arquivo será manipulado.
+
+@@03
+Escrevendo em múltiplas linhas
+
+Agora que conseguimos criar e abrir o arquivo na função registraLog, não podemos nos esquecer de fechá-lo
+// restante do código omitido
+
+func registraLog(site string, status bool) {
+
+    arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR, 0666)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    fmt.Println(arquivo)
+
+    arquivo.Close()
+}
+Agora, ao invés de imprimir o ponteiro para o arquivo, queremos escrever nele. Vamos começar escrevendo somente se o site carregou ou não.
+
+Escrevendo no arquivo
+Para escrever no arquivo, ele possui a função WriteString, ou seja, basta passar o texto para essa função, que ela o escreve dentro do arquivo:
+
+// restante do código omitido
+
+func registraLog(site string, status bool) {
+
+    arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR, 0666)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    arquivo.WriteString(site + " - online: " + status + "\n")
+
+    arquivo.Close()
+}
+Mas o Go irá reclamar, isso acontece pois a função WriteString recebe uma string, e nós estamos tentando concatenar com um booleano, então precisamos convertê-lo com a função strings. Para converter um tipo booleano em uma string, vamos utilizar o pacote strconv, que possui a função FormatBool:
+
+// restante do código omitido
+
+func registraLog(site string, status bool) {
+
+    arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR, 0666)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    arquivo.WriteString(site + " - online: " + strconv.FormatBool(status) + "\n")
+
+    arquivo.Close()
+}
+Ao iniciar o monitoramento e ficar verificando o arquivo de logs, vemos que as linhas são sobrescritas a cada site novo monitorado. Isso acontece porque por padrão, quando escrevemos em um arquivo, é sempre escrito do seu começo. Para isso, na hora de abrir o arquivo, existe a flag O_APPEND, que faz com que o texto seja escrito ao final do arquivo:
+
+// restante do código omitido
+
+func registraLog(site string, status bool) {
+
+    arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    arquivo.WriteString(site + " - online: " + strconv.FormatBool(status) + "\n")
+
+    arquivo.Close()
+}
+Agora conseguimos imprimir corretamente no arquivo, faltando escrever o horário em que o site estava online ou offline. Faremos isso no próximo vídeo 
+
+@@04
+As receitas sobrescritas
+
+João, nosso companheiro do último exercício, viu que apesar de estar conseguindo criar o seu arquivo de receitas.txt com a função abaixo:
+os.OpenFile("receitas.txt", os.O_RDWR|os.O_CREATE, 0666)
+Toda vez que ele tentava adicionar uma nova receita com a função .WriteString("Nova receita aqui") ele acabava por sobrescrever a receita antiga e nunca conseguia aumentar o seu livro de receitas.
+
+O que o João está fazendo de errado para não conseguir adicionar mais de uma receita no seu arquivo de texto ?
+
+Alternativa correta
+Ele está utilizando a função errada para escrever no arquivo, a função .WriteString() sempre escreve por cima do que já está no arquivo.
+ 
+Alternativa correta
+Ele esqueceu de colocar a flag de os.O_APPEND , que iria permitir ele adicionar novos textos no arquivo em vez de sobrescrevê-lo.
+ 
+Correto! A flag os.O_APPEND é essencial quando queremos adicionar textos em um arquivo, em vez de começar sempre escrevendo do começo do mesmo.
+Alternativa correta
+Ele abriu o arquivo com a função os.OpenFile, o que vai impedir que ele adicione novos textos ao arquivo, ele só vai conseguir começar a escrever do começo do arquivo, o que faz com que tudo que ele escreva sobrescreva o que estava antes.
+
+@@05
+Formatando tempo em Go
+
+Queremos imprimir a data no log no seguinte formato:
+05/06/2017 10:50:06 - https://www.alura.com.br - online: true
+Para trabalhar com tempo em Go, vamos utilizar o já conhecido pacote time. Para pegar o tempo atual, ele possui a função Now, que nos retorna um objeto, portanto vamos formatá-lo, com a função format.
+
+Para formatar a data, essa função utiliza diversas constantes, que podem ser consultadas no seu código fonte:
+
+const (
+      _                        = iota
+      stdLongMonth             = iota + stdNeedDate  // "January"
+      stdMonth                                       // "Jan"
+      stdNumMonth                                    // "1"
+      stdZeroMonth                                   // "01"
+      stdLongWeekDay                                 // "Monday"
+      stdWeekDay                                     // "Mon"
+      stdDay                                         // "2"
+      stdUnderDay                                    // "_2"
+      stdZeroDay                                     // "02"
+      stdHour                  = iota + stdNeedClock // "15"
+      stdHour12                                      // "3"
+      stdZeroHour12                                  // "03"
+      stdMinute                                      // "4"
+      stdZeroMinute                                  // "04"
+      stdSecond                                      // "5"
+      stdZeroSecond                                  // "05"
+      stdLongYear              = iota + stdNeedDate  // "2006"
+      stdYear                                        // "06"
+      stdPM                    = iota + stdNeedClock // "PM"
+      stdpm                                          // "pm"
+      stdTZ                    = iota                // "MST"
+      stdISO8601TZ                                   // "Z0700"  // prints Z for UTC
+      stdISO8601SecondsTZ                            // "Z070000"
+      stdISO8601ShortTZ                              // "Z07"
+      stdISO8601ColonTZ                              // "Z07:00" // prints Z for UTC
+      stdISO8601ColonSecondsTZ                       // "Z07:00:00"
+      stdNumTZ                                       // "-0700"  // always numeric
+      stdNumSecondsTz                                // "-070000"
+      stdNumShortTZ                                  // "-07"    // always numeric
+      stdNumColonTZ                                  // "-07:00" // always numeric
+      stdNumColonSecondsTZ                           // "-07:00:00"
+      stdFracSecond0                                 // ".0", ".00", ... , trailing zeros included
+      stdFracSecond9                                 // ".9", ".99", ..., trailing zeros omitted
+
+      stdNeedDate  = 1 << 8             // need month, day, year
+      stdNeedClock = 2 << 8             // need hour, minute, second
+      stdArgShift  = 16                 // extra argument in high bits, above low stdArgShift
+      stdMask      = 1<<stdArgShift - 1 // mask out argument
+  )
+Como queremos representar dia, mês e ano no formato numérico, vamos utilizar o stdZeroDay, representado pelo 02, stdZeroMonth, representado pelo 01 e stdLongYear, representado pelo 2006:
+
+// restante do código omitido
+
+func registraLog(site string, status bool) {
+
+    arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    arquivo.WriteString(time.Now().Format("02/01/2006") + " - " + site + " - online: " +
+        strconv.FormatBool(status) + "\n")
+
+    arquivo.Close()
+}
+Falta ajustar a hora, vamos utilizar o stdHour, representado pelo 15, stdZeroMinute, representado pelo 04, e stdZeroSecond, representado pelo 05:
+
+// restante do código omitido
+
+func registraLog(site string, status bool) {
+
+    arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + site + 
+        " - online: " + strconv.FormatBool(status) + "\n")
+
+    arquivo.Close()
+}
+Podemos agora executar o monitoramento e verificar o log, ele está exatamente como queríamos! Agora que temos a funcionalidade de salvar os logs pronta, falta exibi-los ao escolher o comando 2, e é justamente isso que faremos no próximo vídeo.
+
+@@06
+Que horas são ?
+
+Qual será o tempo exibido no console quando executarmos o código abaixo?
+package main
+
+func main(){
+    fmt.Println(time.Now().Format("02/01/2006 15:04:05"))
+}
+Alternativa correta
+Será exibido no horário e data atual, no formato "Dia/Mês/Ano Hora:Minuto:Segundo"
+ 
+Exato! O Go tem este estilo diferente de formatar o tempo, que pode ser consultado na sua documentação aqui
+Alternativa correta
+Será exibido no horário e data atual, no formato ISO.
+ 
+Alternativa correta
+Será exibido no horário e data informado no formato ISO, ou seja "2006-01-02T15:04:05Z".
+ 
+O Go tem um jeito próprio de formatar as suas datas e horários, que você pode conferir na sua documentação AQUI
+
+https://golang.org/src/time/format.go
+
+https://golang.org/src/time/format.go
+
+@@07
+Função imprimeLogs
+
+Para imprimir os logs do nosso sistema, vamos criar a função imprimeLogs:
+// restante do código omitido
+
+func imprimeLogs() {
+
+}
+Nela, não há nenhuma novidade, precisamos abrir o arquivo de log e imprimir o seu conteúdo. Na aula anterior, vimos como exibir o conteúdo de um arquivo através da função ReadFile, do pacote io/ioutil, então é ela que usaremos:
+
+// restante do código omitido
+
+func imprimeLogs() {
+
+    arquivo, err := ioutil.ReadFile("log.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    fmt.Println(arquivo)
+}
+Como a função nos retorna o arquivo em bytes, precisamos convertê-los para string:
+
+// restante do código omitido
+
+func imprimeLogs() {
+
+    arquivo, err := ioutil.ReadFile("log.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    fmt.Println(string(arquivo))
+}
+O detalhe é que não precisamos fechar o arquivo, pois o pacote ioutil abre o arquivo, o lê e o fecha para nós. Agora, chamamos essa função quando o comando 2 for digitado:
+
+// restante do código omitido
+
+func main() {
+    exibeIntroducao()
+    for {
+        exibeMenu()
+        comando := leComando()
+
+        switch comando {
+        case 1:
+            iniciarMonitoramento()
+        case 2:
+            fmt.Println("Exibindo Logs...")
+            imprimeLogs()
+        case 0:
+            fmt.Println("Saindo do programa")
+            os.Exit(0)
+        default:
+            fmt.Println("Não conheço este comando")
+            os.Exit(-1)
+        }
+    }
+}
+Ao executar o programa e digitar o comando 2, os logs são exibidos no terminal!
+
+@@07
+Função imprimeLogs
+
+Para imprimir os logs do nosso sistema, vamos criar a função imprimeLogs:
+// restante do código omitido
+
+func imprimeLogs() {
+
+}
+Nela, não há nenhuma novidade, precisamos abrir o arquivo de log e imprimir o seu conteúdo. Na aula anterior, vimos como exibir o conteúdo de um arquivo através da função ReadFile, do pacote io/ioutil, então é ela que usaremos:
+
+// restante do código omitido
+
+func imprimeLogs() {
+
+    arquivo, err := ioutil.ReadFile("log.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    fmt.Println(arquivo)
+}
+Como a função nos retorna o arquivo em bytes, precisamos convertê-los para string:
+
+// restante do código omitido
+
+func imprimeLogs() {
+
+    arquivo, err := ioutil.ReadFile("log.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    fmt.Println(string(arquivo))
+}
+O detalhe é que não precisamos fechar o arquivo, pois o pacote ioutil abre o arquivo, o lê e o fecha para nós. Agora, chamamos essa função quando o comando 2 for digitado:
+
+// restante do código omitido
+
+func main() {
+    exibeIntroducao()
+    for {
+        exibeMenu()
+        comando := leComando()
+
+        switch comando {
+        case 1:
+            iniciarMonitoramento()
+        case 2:
+            fmt.Println("Exibindo Logs...")
+            imprimeLogs()
+        case 0:
+            fmt.Println("Saindo do programa")
+            os.Exit(0)
+        default:
+            fmt.Println("Não conheço este comando")
+            os.Exit(-1)
+        }
+    }
+}
+Ao executar o programa e digitar o comando 2, os logs são exibidos no terminal!
+
+@@08
+Mãos na Massa: Guardando os Logs
+
+Começando deste ponto? Você pode fazer o DOWNLOAD completo do projeto do capítulo anterior e continuar seus estudos a partir deste capítulo.
+Neste exercício vamos finalizar nosso projeto e escrever a funcionalidade final, que escreve nosso arquivo de logs.
+
+1- Para isto vamos criar a função registraLog que deve ser responsável por escrever em um arquivo de textos se o site está online ou não. Crie a função registraLog, que recebe o site e um booleano para informar se o site está online ou não.
+
+// restante do código omitido
+
+func registraLog(site string, status bool) {
+
+}
+2- Vamos chamar a função registraLog toda vez que um site retornar o status code 200 ou não. Em sua função testaSite, adicione duas chamadas a registraLog, passando true ou false em caso de sucesso ou não da requisição de teste:
+
+
+// restante do código omitido
+
+func testaSite(site string) {
+
+    //restante da função.
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+        registraLog(site, true)
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+        registraLog(site, false)
+    }
+}
+3- Agora dentro da função registraLog , vamos chamar a função os.OpenFile com as flags os.O_CREATE|os.O_RDWR|os.O_APPEND , para que o arquivo possa ser criado, possa ser escrito e que possamos adicionar múltiplas linhas nele. Vamos detectar se ocorrer algum erro e também não devemos esquecer de fechar o arquivo.
+
+//hello.go
+// restante do código omitido
+
+func registraLog(site string, status bool) {
+
+    arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+
+    arquivo.Close()
+}
+4- Agora como visto no vídeo, vamos utilizar a função .writeString de arquivo, junto com a .Format do pacote time para escrever no arquivo de texto a hora que o log foi registrado e se o site estava online ou não. Como a função .WriteString aceita apenas strings, vamos tomar o cuidado de converter o booleano status para string também, com a função strconv.FormatBool
+
+//hello.go
+// restante do código omitido
+
+func registraLog(site string, status bool) {
+
+    arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+    arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + site + 
+            " - online: " + strconv.FormatBool(status) + "\n")
+
+
+    arquivo.Close()
+}
+5- Com a escrita dos logs pronta, basta agora criar uma pequena função com os conhecimentos de leitura de arquivos que já temos para criar a função imprimeLogs, que vai ler o nosso arquivo de logs e imprimir no nosso terminal:
+
+Não esqueça de importar io/ioutil
+
+
+import "io/ioutil"
+
+// restante do código omitido
+
+func imprimeLogs() {
+
+    arquivo, err := ioutil.ReadFile("log.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    fmt.Println(string(arquivo))
+}
+Lembre-se a função ReadFile do pacote ioutil já realiza o Open e Close do arquivo por debaixo dos panos para nós, por isso não nos preocupamos com isto aqui`
+
+@@6- Com a função criada, vamos chama-lá em nosso menu:
+
+// restante do código omitido
+
+func main() {
+    exibeIntroducao()
+    for {
+        exibeMenu()
+        comando := leComando()
+
+        switch comando {
+        case 1:
+            iniciarMonitoramento()
+        case 2:
+            //Chamando aqui
+            fmt.Println("Exibindo Logs...")
+            imprimeLogs()
+        case 0:
+            fmt.Println("Saindo do programa")
+            os.Exit(0)
+        default:
+            fmt.Println("Não conheço este comando")
+            os.Exit(-1)
+        }
+    }
+}
+Agora nossa aplicação está pronta, implementamos todas as funções que gostariamos e agora conseguimos monitorar nossos sites utilizando a linguagem Go.
+
+O código final do seu projeto deve ficar assim:
+Lembre-se para que ele funcione você precisa ter criado o arquivo sites.txt e ter colocado algum endereço lá dentro!
+
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "io"
+    "io/ioutil"
+    "net/http"
+    "os"
+    "strconv"
+    "strings"
+    "time"
+)
+
+const monitoramentos = 2
+const delay = 5
+
+func main() {
+    exibeIntroducao()
+    for {
+        exibeMenu()
+        comando := leComando()
+
+        switch comando {
+        case 1:
+            iniciarMonitoramento()
+        case 2:
+            //Chamando aqui
+            fmt.Println("Exibindo Logs...")
+            imprimeLogs()
+        case 0:
+            fmt.Println("Saindo do programa")
+            os.Exit(0)
+        default:
+            fmt.Println("Não conheço este comando")
+            os.Exit(-1)
+        }
+    }
+}
+
+func exibeIntroducao() {
+    nome := "Douglas"
+    versao := 1.2
+    fmt.Println("Olá, sr.", nome)
+    fmt.Println("Este programa está na versão", versao)
+}
+
+func exibeMenu() {
+    fmt.Println("1- Iniciar Monitoramento")
+    fmt.Println("2- Exibir Logs")
+    fmt.Println("0- Sair do Programa")
+}
+
+func leComando() int {
+    var comandoLido int
+    fmt.Scan(&comandoLido)
+    fmt.Println("O comando escolhido foi", comandoLido)
+    fmt.Println("")
+
+    return comandoLido
+}
+
+func iniciarMonitoramento() {
+    fmt.Println("Monitorando...")
+
+    sites := leSitesDoArquivo()
+
+    for i := 0; i < monitoramentos; i++ {
+        for i, site := range sites {
+            fmt.Println("Testando site", i, ":", site)
+            testaSite(site)
+        }
+        time.Sleep(delay * time.Second)
+        fmt.Println("")
+    }
+
+    fmt.Println("")
+}
+
+func testaSite(site string) {
+    resp, err := http.Get(site)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    if resp.StatusCode == 200 {
+        fmt.Println("Site:", site, "foi carregado com sucesso!")
+        registraLog(site, true)
+    } else {
+        fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+        registraLog(site, false)
+    }
+}
+
+func leSitesDoArquivo() []string {
+
+    var sites []string
+
+    arquivo, err := os.Open("sites.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    leitor := bufio.NewReader(arquivo)
+    for {
+        linha, err := leitor.ReadString('\n')
+        linha = strings.TrimSpace(linha)
+
+        sites = append(sites, linha)
+
+        if err == io.EOF {
+            break
+        }
+
+    }
+
+    arquivo.Close()
+
+    return sites
+}
+
+func imprimeLogs() {
+
+    arquivo, err := ioutil.ReadFile("log.txt")
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+
+    fmt.Println(string(arquivo))
+}
+
+func registraLog(site string, status bool) {
+
+    arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+
+    if err != nil {
+        fmt.Println("Ocorreu um erro:", err)
+    }
+    arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + site + " - online: " + strconv.FormatBool(status) + "\n")
+
+    arquivo.Close()
+}
+
+@@09
+O que aprendemos?
+
+O que aprendemos?
+Abrir arquivos
+Se o arquivo não existir, nós o criamos
+As flags da função os.OpenFile
+Escrever em arquivos
+Converter tipos para string
+Trabalhar com tempo e formatá-lo
+Exibir o conteúdo de um arquivo
+
+@@10
+Conclusão
+
+Chegamos ao final do curso Go: Aprendendo a linguagem do Google e aqui começamos e entender porque essa linguagem é tão legal.
+Partimos desde o princípio, da instalação do Go, criação do seu workspace e a função main. Vimos a criação de variáveis, seus tipos e que o Go pode inferi-los. Criamos funções, retornamos valores, inclusive mais de um, e vimos como receber valores como parâmetro.
+
+Trabalhamos com coleções, arrays e slices, e vimos que slices utilizam arrays por debaixo dos panos.
+
+Vimos também diversos pacotes durante todo o treinamento para fazer requisições HTTP, trabalhar com tempo, converter tipos para string, acessar o sistema operacional, abrir, ler e escrever em arquivos.
+
+Vimos todas as instruções introdutórias do Go, que precisamos saber para criar uma aplicação mais complexa.
+
+Espero que vocês tenham gostado das dicas dadas ao longo do curso, de trabalhar com o Visual Studio Code, dos exercícios Para saber mais de cada aula, e se houver alguma dúvida, não deixe de recorrer ao fórum :)
+
+Continuem com os seus estudos, muito sucesso e até o próximo curso :)
+
+@@11
+Download do Projeto Final
+
+Se você deseja fazer o download do projeto final, você pode fazer isto clicando AQUI
+
+https://s3.amazonaws.com/caelum-online-public/624-golang/07/projetos/alura-golang-stage-fim-cap07.zip
