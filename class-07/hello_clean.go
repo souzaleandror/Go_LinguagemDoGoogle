@@ -8,6 +8,7 @@ import (
 	"bufio"
 	"strings"
 	"io"
+	"io/ioutil"
 	"strconv"
 )
 
@@ -121,13 +122,13 @@ func leSiteDoArquivo() []string {
 }
 
 func registraLog(site string, status bool) {
-	arquivo, err := os.Open("log.txt", os.O_RDWR | os.O_CREATE, 0666)
+	arquivo, err := os.OpenFile("log.txt",os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	
 	if err != nil {
 		fmt.Println(arquivo)
 	}
 
-	arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + site + " - Online: " + strconv.formatBool(status) + "\n")
+	arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + site + " - Online: " + strconv.FormatBool(status) + "\n")
 
 	arquivo.Close()
 	fmt.Println(arquivo)
